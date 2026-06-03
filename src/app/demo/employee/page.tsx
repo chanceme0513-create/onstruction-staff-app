@@ -1,6 +1,7 @@
+"use client";
+
+import { useState } from "react";
 import { ConditionSurvey } from "@/components/employee/ConditionSurvey";
-import { BossScheduleCalendar } from "@/components/employee/BossScheduleCalendar";
-import { Noticeboard } from "@/components/employee/Noticeboard";
 import { EmployeePortfolio } from "@/components/employee/EmployeePortfolio";
 import { ThanksChallenge } from "@/components/employee/ThanksChallenge";
 import { QuickThanks } from "@/components/employee/QuickThanks";
@@ -8,6 +9,9 @@ import { TeamMood } from "@/components/employee/TeamMood";
 import { ThanksRanking } from "@/components/employee/ThanksRanking";
 import { RecentThanksTimeline } from "@/components/employee/RecentThanksTimeline";
 import { TodayInfo } from "@/components/employee/TodayInfo";
+import { QuickAccessBar } from "@/components/employee/QuickAccessBar";
+import { CalendarModal } from "@/components/employee/CalendarModal";
+import { NoticeboardModal } from "@/components/employee/NoticeboardModal";
 
 const CONDITION_HISTORY = [
   { date: "昨日", avgScore: 4.2, comment: "順調に作業が進みました" },
@@ -15,6 +19,9 @@ const CONDITION_HISTORY = [
 ];
 
 export default function DemoEmployeePage() {
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [showNoticeboard, setShowNoticeboard] = useState(false);
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* ヘッダー */}
@@ -22,7 +29,7 @@ export default function DemoEmployeePage() {
         <h1 className="text-base font-bold text-gray-800">建築会社スタッフアプリ</h1>
       </header>
 
-      <main className="max-w-md mx-auto px-4 py-6 pb-24 flex flex-col gap-6">
+      <main className="max-w-md mx-auto px-4 py-6 pb-32 flex flex-col gap-6">
         {/* ウェルカムバナー */}
         <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-5 text-white shadow-sm">
           <p className="text-sm opacity-80 mb-1">お疲れ様です！</p>
@@ -76,13 +83,22 @@ export default function DemoEmployeePage() {
 
         {/* 従業員ポートフォリオ */}
         <EmployeePortfolio />
-
-        {/* 親方の予定（カレンダー形式） */}
-        <BossScheduleCalendar />
-
-        {/* 掲示板 */}
-        <Noticeboard />
       </main>
+
+      {/* クイックアクセスバー（固定） */}
+      <QuickAccessBar
+        onCalendarClick={() => setShowCalendar(true)}
+        onNoticeClick={() => setShowNoticeboard(true)}
+      />
+
+      {/* カレンダーモーダル */}
+      <CalendarModal isOpen={showCalendar} onClose={() => setShowCalendar(false)} />
+
+      {/* 掲示板モーダル */}
+      <NoticeboardModal
+        isOpen={showNoticeboard}
+        onClose={() => setShowNoticeboard(false)}
+      />
     </div>
   );
 }

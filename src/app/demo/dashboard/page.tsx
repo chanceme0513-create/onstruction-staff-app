@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 import { ConditionSurvey } from "@/components/employee/ConditionSurvey";
-import { BossScheduleCalendar } from "@/components/employee/BossScheduleCalendar";
-import { Noticeboard } from "@/components/employee/Noticeboard";
 import { EmployeePortfolio } from "@/components/employee/EmployeePortfolio";
 import { ThanksChallenge } from "@/components/employee/ThanksChallenge";
 import { QuickThanks } from "@/components/employee/QuickThanks";
@@ -18,6 +16,9 @@ import { TopPerformers } from "@/components/manager/TopPerformers";
 import { QuestionBreakdown } from "@/components/manager/QuestionBreakdown";
 import { ActionRecommendations } from "@/components/manager/ActionRecommendations";
 import { ThanksLeaderboard } from "@/components/manager/ThanksLeaderboard";
+import { QuickAccessBar } from "@/components/employee/QuickAccessBar";
+import { CalendarModal } from "@/components/employee/CalendarModal";
+import { NoticeboardModal } from "@/components/employee/NoticeboardModal";
 
 type EmployeeCondition = {
   id: string;
@@ -89,6 +90,8 @@ export default function DashboardPage() {
   const [selectedEmployee, setSelectedEmployee] = useState<EmployeeCondition | null>(
     null
   );
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [showNoticeboard, setShowNoticeboard] = useState(false);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -123,7 +126,7 @@ export default function DashboardPage() {
 
       {/* 従業員ビュー */}
       {activeTab === "employee" && (
-        <main className="max-w-md mx-auto px-4 py-6 pb-24 flex flex-col gap-6">
+        <main className="max-w-md mx-auto px-4 py-6 pb-32 flex flex-col gap-6">
           {/* ウェルカムバナー */}
           <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-5 text-white shadow-sm">
             <p className="text-sm opacity-80 mb-1">お疲れ様です！</p>
@@ -177,12 +180,6 @@ export default function DashboardPage() {
 
           {/* 従業員ポートフォリオ */}
           <EmployeePortfolio />
-
-          {/* 親方の予定（カレンダー形式） */}
-          <BossScheduleCalendar />
-
-          {/* 掲示板 */}
-          <Noticeboard />
         </main>
       )}
 
@@ -391,6 +388,23 @@ export default function DashboardPage() {
           </div>
         </div>
       )}
+
+      {/* クイックアクセスバー（従業員ビューのみ） */}
+      {activeTab === "employee" && (
+        <QuickAccessBar
+          onCalendarClick={() => setShowCalendar(true)}
+          onNoticeClick={() => setShowNoticeboard(true)}
+        />
+      )}
+
+      {/* カレンダーモーダル */}
+      <CalendarModal isOpen={showCalendar} onClose={() => setShowCalendar(false)} />
+
+      {/* 掲示板モーダル */}
+      <NoticeboardModal
+        isOpen={showNoticeboard}
+        onClose={() => setShowNoticeboard(false)}
+      />
     </div>
   );
 }
