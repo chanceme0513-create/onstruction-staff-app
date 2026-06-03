@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+/* ============================================================
+   デザイントークン（Tailwind v4 @theme）
+   ============================================================
+   使用例: bg-primary / text-primary / border-primary-light
+   ============================================================ */
+
+@theme {
+  /* カラーパレット */
+  --color-primary:         #FF7A35;
+  --color-primary-light:   #FFB088;
+  --color-primary-dark:    #E05A1A;
+  --color-secondary:       #4ECDC4;
+  --color-secondary-dark:  #38B2AA;
+  --color-surface:         #FFFAF7;
+
+  /* フォント（日本語対応システムフォント） */
+  --font-sans:
+    "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+    "BIZ UDPGothic", Meiryo,
+    "Segoe UI", Arial, sans-serif;
+}
+
+/* ============================================================
+   ベーススタイル
+   ============================================================ */
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================================
+   アニメーション
+   ============================================================ */
+
+@keyframes slide-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slide-up  { animation: slide-up  0.25s ease-out; }
+.animate-fade-in   { animation: fade-in   0.2s  ease-out; }
+.animate-count-up  { animation: count-up  0.4s  ease-out both; }
+
+/* ============================================================
+   紙吹雪アニメーション
+   ============================================================ */
+
+@keyframes confetti-fall {
+  0%   { transform: translateY(-10px) rotate(0deg)   scale(1);   opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateY(180px) rotate(540deg) scale(0.6); opacity: 0; }
+}
+
+@keyframes confetti-sway {
+  0%, 100% { margin-left: 0; }
+  50%       { margin-left: 20px; }
+}
+
+.confetti-piece {
+  position: absolute;
+  top: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  animation:
+    confetti-fall 1.8s ease-in forwards,
+    confetti-sway 0.8s ease-in-out infinite;
+}

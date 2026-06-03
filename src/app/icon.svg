@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- 背景 -->
+  <rect width="32" height="32" rx="8" fill="#FF7A35"/>
+  <!-- コーヒーカップ（シンプル） -->
+  <!-- カップ本体 -->
+  <rect x="7" y="13" width="14" height="11" rx="2" fill="white"/>
+  <!-- カップ取っ手 -->
+  <path d="M21 16 Q26 16 26 19.5 Q26 23 21 23" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- ソーサー -->
+  <rect x="5" y="24" width="18" height="2" rx="1" fill="white" opacity="0.8"/>
+  <!-- 湯気 1 -->
+  <path d="M11 11 Q12 9 11 7" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+  <!-- 湯気 2 -->
+  <path d="M14 10 Q15 8 14 6" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+  <!-- 湯気 3 -->
+  <path d="M17 11 Q18 9 17 7" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+  <!-- スター -->
+  <circle cx="23" cy="9" r="3" fill="#FFD700"/>
+  <text x="22" y="11.5" font-size="4" fill="#FF7A35" text-anchor="middle" font-weight="bold">★</text>
+</svg>
