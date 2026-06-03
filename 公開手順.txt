@@ -1,0 +1,47 @@
+========================================
+建築会社スタッフアプリ - 公開手順（簡易版）
+========================================
+
+【最速で公開する方法】
+
+1. GitHubにアカウント作成（無料）
+   https://github.com
+
+2. 新しいリポジトリを作成
+   - 名前: construction-staff-app
+   - Public（公開）を選択
+
+3. ターミナルで実行（YOUR_USERNAMEは自分のGitHubユーザー名）
+
+   cd /Users/natsuki.akiyama/construction-staff-app
+   git remote add origin https://github.com/YOUR_USERNAME/construction-staff-app.git
+   git push -u origin main
+
+4. Vercelにアクセス（無料）
+   https://vercel.com
+
+5. 「Continue with GitHub」でログイン
+
+6. 「Add New」→「Project」→ construction-staff-app を選択
+
+7. 「Deploy」をクリック
+
+完了！ 1〜2分でURLが生成されます。
+
+例: https://construction-staff-app.vercel.app
+
+========================================
+
+【もっと簡単な方法（コマンド1つ）】
+
+npm install -g vercel
+cd /Users/natsuki.akiyama/construction-staff-app
+vercel --prod
+
+※ 初回は質問に答えてください（すべてEnterでOK）
+
+========================================
+
+詳しい手順は DEPLOY_NOW.md を参照してください。
+
+質問があれば GitHub Issues で聞いてください。
