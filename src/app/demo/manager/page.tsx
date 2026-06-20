@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NoticeboardScreen } from "@/components/employee/NoticeboardScreen";
+import { supabase, DailyReportRow } from "@/lib/supabase";
 
 // ===== 型定義 =====
 type ManagerTab = "dashboard" | "reports" | "noticeboard";
@@ -30,66 +31,32 @@ type DailyReport = {
   note?: string;
 };
 
-// ===== ダミーデータ =====
-const DUMMY_REPORTS: DailyReport[] = [
-  {
-    id: "1",
-    name: "田中 太郎",
+// ===== Supabaseデータ → 画面用データに変換 =====
+function rowToReport(row: DailyReportRow): DailyReport {
+  return {
+    id: row.id,
+    name: row.staff_name,
     avatar: "👷",
-    submittedAt: "17:32",
-    siteName: "渋谷マンション新築工事",
-    startTime: "08:00",
-    endTime: "17:30",
-    hoursWorked: 9.5,
-    answers: { health: 4, progress: 5, teamwork: 4, safety: 3, motivation: 4 },
-    avgScore: 4.0,
-    thanksSentTo: "山田リーダー",
-    thanksTag: "助かりました",
-    note: "資材の納品が遅れており、明日の作業スケジュールに影響が出そうです。",
-  },
-  {
-    id: "2",
-    name: "山田 次郎",
-    avatar: "👨‍🔧",
-    submittedAt: "17:15",
-    siteName: "品川オフィスビル改修",
-    startTime: "07:30",
-    endTime: "17:00",
-    hoursWorked: 9.5,
-    answers: { health: 5, progress: 5, teamwork: 5, safety: 5, motivation: 5 },
-    avgScore: 5.0,
-    thanksSentTo: "田中 太郎",
-    thanksTag: "よく頑張りました",
-  },
-  {
-    id: "3",
-    name: "佐藤 健",
-    avatar: "🧑‍🔧",
-    submittedAt: "17:45",
-    siteName: "新宿タワー基礎工事",
-    startTime: "08:00",
-    endTime: "17:00",
-    hoursWorked: 9.0,
-    answers: { health: 2, progress: 3, teamwork: 3, safety: 2, motivation: 3 },
-    avgScore: 2.6,
-    note: "少し疲れが溜まっています。体調面で不安があります。",
-  },
-  {
-    id: "4",
-    name: "鈴木 誠",
-    avatar: "👨‍💼",
-    submittedAt: "17:20",
-    siteName: "渋谷マンション新築工事",
-    startTime: "08:00",
-    endTime: "17:30",
-    hoursWorked: 9.5,
-    answers: { health: 4, progress: 4, teamwork: 3, safety: 4, motivation: 4 },
-    avgScore: 3.8,
-    thanksSentTo: "佐藤 健",
-    thanksTag: "お疲れ様でした",
-    note: "A棟の外壁作業を完了しました。明日はB棟に移ります。",
-  },
-];
+    submittedAt: row.submitted_at
+      ? new Date(row.submitted_at).toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit" })
+      : "--:--",
+    siteName: row.site_name,
+    startTime: row.start_time,
+    endTime: row.end_time,
+    hoursWorked: row.hours_worked,
+    answers: {
+      health: row.score_health,
+      progress: row.score_progress,
+      teamwork: row.score_teamwork,
+      safety: row.score_safety,
+      motivation: row.score_motivation,
+    },
+    avgScore: row.avg_score,
+    thanksSentTo: row.thanks_sent_to ?? undefined,
+    thanksTag: row.thanks_tag ?? undefined,
+    note: row.note ?? undefined,
+  };
+}
 
 const CONDITION_LABELS = ["体調", "進捗", "連携", "安全", "意欲"];
 
@@ -370,12 +337,31 @@ const TABS: { id: ManagerTab; label: string }[] = [
 export default function ManagerPage() {
   const [activeTab, setActiveTab] = useState<ManagerTab>("dashboard");
   const [selectedReport, setSelectedReport] = useState<DailyReport | null>(null);
+  const [reports, setReports] = useState<DailyReport[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const submittedCount = DUMMY_REPORTS.length;
+  useEffect(() => {
+    const today = new Date().toISOString().split("T")[0];
+    supabase
+      .from("daily_reports")
+      .select("*")
+      .eq("report_date", today)
+      .order("submitted_at", { ascending: false })
+      .then(({ data, error }) => {
+        if (!error && data) {
+          setReports(data.map(rowToReport));
+        }
+        setLoading(false);
+      });
+  }, []);
+
+  const submittedCount = reports.length;
   const avgScore =
-    DUMMY_REPORTS.reduce((sum, r) => sum + r.avgScore, 0) / submittedCount;
-  const alertCount = DUMMY_REPORTS.filter((r) => r.avgScore < 3.0).length;
-  const hasNotes = DUMMY_REPORTS.filter((r) => r.note).length;
+    submittedCount > 0
+      ? reports.reduce((sum, r) => sum + r.avgScore, 0) / submittedCount
+      : 0;
+  const alertCount = reports.filter((r) => r.avgScore < 3.0).length;
+  const hasNotes = reports.filter((r) => r.note).length;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -408,8 +394,15 @@ export default function ManagerPage() {
 
       <main className="max-w-3xl mx-auto px-4 py-6 pb-10">
 
+        {/* ローディング */}
+        {loading && (
+          <div className="flex justify-center py-16">
+            <div className="w-8 h-8 rounded-full border-4 border-blue-200 border-t-blue-500 animate-spin" />
+          </div>
+        )}
+
         {/* ===== ダッシュボード ===== */}
-        {activeTab === "dashboard" && (
+        {!loading && activeTab === "dashboard" && (
           <div className="flex flex-col gap-5">
             {/* サマリーカード */}
             <div className="grid grid-cols-3 gap-3">
@@ -435,7 +428,7 @@ export default function ManagerPage() {
             {/* アラート */}
             {alertCount > 0 && (
               <div className="flex flex-col gap-2">
-                {DUMMY_REPORTS.filter((r) => r.avgScore < 3.0).map((r) => (
+                {reports.filter((r) => r.avgScore < 3.0).map((r) => (
                   <div
                     key={r.id}
                     className="bg-red-50 border-l-4 border-red-400 rounded-xl px-4 py-3 flex items-start gap-3"
@@ -486,7 +479,7 @@ export default function ManagerPage() {
                 <h2 className="text-sm font-bold text-gray-800">本日のコンディション一覧</h2>
               </div>
               <div className="divide-y divide-gray-50">
-                {DUMMY_REPORTS.map((report) => (
+                {reports.map((report) => (
                   <button
                     key={report.id}
                     onClick={() => setSelectedReport(report)}
@@ -521,7 +514,7 @@ export default function ManagerPage() {
         )}
 
         {/* ===== 業務連絡（提出済み報告一覧） ===== */}
-        {activeTab === "reports" && (
+        {!loading && activeTab === "reports" && (
           <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between">
               <p className="text-sm font-semibold text-gray-700">
@@ -529,7 +522,7 @@ export default function ManagerPage() {
               </p>
             </div>
 
-            {DUMMY_REPORTS.map((report) => (
+            {reports.map((report) => (
               <button
                 key={report.id}
                 onClick={() => setSelectedReport(report)}
@@ -597,7 +590,7 @@ export default function ManagerPage() {
         )}
 
         {/* ===== 掲示板 ===== */}
-        {activeTab === "noticeboard" && (
+        {!loading && activeTab === "noticeboard" && (
           <NoticeboardScreen />
         )}
 

@@ -1,0 +1,61 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - heading "建築会社スタッフアプリ" [level=1] [ref=e6]
+        - generic [ref=e7]: 掲示板
+    - main [ref=e8]:
+      - generic [ref=e217]:
+        - button "新しい連絡を投稿" [ref=e218]:
+          - img [ref=e219]
+          - text: 新しい連絡を投稿
+        - generic [ref=e221]:
+          - generic [ref=e222]:
+            - generic [ref=e223]:
+              - generic [ref=e224]: 📍
+              - heading "【重要】安全講習会のお知らせ" [level=3] [ref=e225]
+            - paragraph [ref=e226]: 6月10日(月) 15:00より本社にて安全講習会を実施します。全員参加でお願いします。
+            - generic [ref=e227]:
+              - generic [ref=e228]: 親方
+              - generic [ref=e229]: 今日 08:30
+          - generic [ref=e230]:
+            - heading "A現場 進捗状況" [level=3] [ref=e232]
+            - paragraph [ref=e233]: 本日午前中に基礎工事が完了しました。明日から鉄骨組み立てに入ります。
+            - generic [ref=e234]:
+              - generic [ref=e235]: 山田リーダー
+              - generic [ref=e236]: 今日 11:20
+          - generic [ref=e237]:
+            - heading "資材納品の遅延について" [level=3] [ref=e239]
+            - paragraph [ref=e240]: B現場の資材納品が6/5→6/7に変更となりました。作業スケジュールを調整します。
+            - generic [ref=e241]:
+              - generic [ref=e242]: 親方
+              - generic [ref=e243]: 昨日 16:45
+          - generic [ref=e244]:
+            - heading "今週の天気予報" [level=3] [ref=e246]
+            - paragraph [ref=e247]: 今週は晴れが続く見込みです。熱中症対策を忘れずに！
+            - generic [ref=e248]:
+              - generic [ref=e249]: 事務担当
+              - generic [ref=e250]: 昨日 09:00
+          - generic [ref=e251]:
+            - heading "C現場 完工予定" [level=3] [ref=e253]
+            - paragraph [ref=e254]: C現場は予定通り6月15日に完工の見込みです。最終チェックをお願いします。
+            - generic [ref=e255]:
+              - generic [ref=e256]: 山田リーダー
+              - generic [ref=e257]: 2日前
+    - navigation [ref=e53]:
+      - generic [ref=e54]:
+        - button "ホーム" [ref=e55]:
+          - img [ref=e56]
+          - generic [ref=e58]: ホーム
+        - button "業務報告" [ref=e59]:
+          - img [ref=e60]
+          - generic [ref=e62]: 業務報告
+        - button "掲示板" [active] [ref=e63]:
+          - img [ref=e64]
+          - generic [ref=e66]: 掲示板
+        - button "マイページ" [ref=e67]:
+          - img [ref=e68]
+          - generic [ref=e70]: マイページ
+  - button "Open Next.js Dev Tools" [ref=e77] [cursor=pointer]:
+    - img [ref=e78]
+  - alert [ref=e71]

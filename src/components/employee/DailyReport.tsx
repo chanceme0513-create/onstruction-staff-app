@@ -1,28 +1,26 @@
 "use client";
 
 import { useState } from "react";
+import { supabase } from "@/lib/supabase";
+import { StaffUser, STAFF_LIST } from "./UserSelectScreen";
 
 type Answer = 1 | 2 | 3 | 4 | 5;
 
 const CONDITION_QUESTIONS = [
-  { id: 1, text: "本日の体調はいかがでしたか？" },
-  { id: 2, text: "作業の進捗は順調でしたか？" },
-  { id: 3, text: "チーム内の連携は取れていましたか？" },
-  { id: 4, text: "安全面で気になることはありましたか？（5＝問題なし）" },
-  { id: 5, text: "明日への意欲はいかがですか？" },
-];
-
-const TEAM_MEMBERS = [
-  { id: "1", name: "山田リーダー" },
-  { id: "2", name: "佐藤" },
-  { id: "3", name: "鈴木" },
-  { id: "4", name: "高橋" },
-  { id: "5", name: "伊藤" },
+  { id: 1, key: "score_health", text: "本日の体調はいかがでしたか？" },
+  { id: 2, key: "score_progress", text: "作業の進捗は順調でしたか？" },
+  { id: 3, key: "score_teamwork", text: "チーム内の連携は取れていましたか？" },
+  { id: 4, key: "score_safety", text: "安全面で気になることはありましたか？（5＝問題なし）" },
+  { id: 5, key: "score_motivation", text: "明日への意欲はいかがですか？" },
 ];
 
 const THANKS_TAGS = ["助かりました", "ありがとう", "お疲れ様でした", "よく頑張りました"];
 
-export function DailyReport() {
+type Props = {
+  currentUser: StaffUser;
+};
+
+export function DailyReport({ currentUser }: Props) {
   const [siteName, setSiteName] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
@@ -31,16 +29,61 @@ export function DailyReport() {
   const [thanksTag, setThanksTag] = useState<string | null>(null);
   const [note, setNote] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const isWorkInfoComplete = siteName.trim() !== "" && startTime !== "" && endTime !== "";
   const isConditionComplete = Object.keys(answers).length === CONDITION_QUESTIONS.length;
   const canSubmit = isWorkInfoComplete && isConditionComplete;
 
-  function handleSubmit() {
-    if (!canSubmit) {
-      alert("現場名・勤務時間・コンディション確認をすべて入力してください");
+  // 自分以外のスタッフを感謝の送り先として表示
+  const teamMembers = STAFF_LIST.filter((s) => s.id !== currentUser.id);
+
+  function calcHours(start: string, end: string): number {
+    const [sh, sm] = start.split(":").map(Number);
+    const [eh, em] = end.split(":").map(Number);
+    return Math.round(((eh * 60 + em - (sh * 60 + sm)) / 60) * 10) / 10;
+  }
+
+  async function handleSubmit() {
+    if (!canSubmit) return;
+    setSubmitting(true);
+
+    const avgScore =
+      Object.values(answers).reduce((a, b) => a + b, 0) / Object.values(answers).length;
+
+    const thanksSentTo = thanksMember
+      ? STAFF_LIST.find((s) => s.id === thanksMember)?.name ?? null
+      : null;
+
+    const today = new Date().toISOString().split("T")[0];
+
+    const { error } = await supabase.from("daily_reports").insert({
+      staff_id: currentUser.id,
+      staff_name: currentUser.name,
+      site_name: siteName.trim(),
+      start_time: startTime,
+      end_time: endTime,
+      hours_worked: calcHours(startTime, endTime),
+      score_health: answers[1],
+      score_progress: answers[2],
+      score_teamwork: answers[3],
+      score_safety: answers[4],
+      score_motivation: answers[5],
+      avg_score: Math.round(avgScore * 10) / 10,
+      thanks_sent_to: thanksSentTo,
+      thanks_tag: thanksTag,
+      note: note.trim() || null,
+      report_date: today,
+    });
+
+    setSubmitting(false);
+
+    if (error) {
+      console.error(error);
+      alert("送信に失敗しました。もう一度お試しください。");
       return;
     }
+
     setSubmitted(true);
   }
 
@@ -157,7 +200,7 @@ export function DailyReport() {
 
           <div className="flex flex-col gap-3">
             <div className="flex flex-wrap gap-2">
-              {TEAM_MEMBERS.map((member) => (
+              {teamMembers.map((member) => (
                 <button
                   key={member.id}
                   onClick={() =>
@@ -214,14 +257,14 @@ export function DailyReport() {
         <div className="flex flex-col gap-2">
           <button
             onClick={handleSubmit}
-            disabled={!canSubmit}
+            disabled={!canSubmit || submitting}
             className={`w-full py-3 rounded-xl text-sm font-bold transition-colors ${
-              canSubmit
+              canSubmit && !submitting
                 ? "bg-blue-600 hover:bg-blue-700 text-white"
                 : "bg-gray-100 text-gray-400 cursor-not-allowed"
             }`}
           >
-            報告を送信する
+            {submitting ? "送信中..." : "報告を送信する"}
           </button>
           {!canSubmit && (
             <p className="text-xs text-gray-400 text-center">
