@@ -6,7 +6,7 @@ import { DailyReport } from "@/components/employee/DailyReport";
 import { TeamMood } from "@/components/employee/TeamMood";
 import { TodayInfo } from "@/components/employee/TodayInfo";
 import { NoticeboardScreen } from "@/components/employee/NoticeboardScreen";
-import { ManagerScheduleWidget } from "@/components/employee/ManagerScheduleWidget";
+import { ManagerCalendarWidget } from "@/components/employee/ManagerCalendarWidget";
 import { ThanksEvaluationCard } from "@/components/employee/ThanksEvaluationCard";
 
 const PAGE_TITLES: Record<Tab, string> = {
@@ -45,8 +45,8 @@ export default function DemoEmployeePage() {
               </div>
             </div>
 
-            {/* 親方の予定（インライン） */}
-            <ManagerScheduleWidget />
+            {/* 親方の予定（カレンダー） */}
+            <ManagerCalendarWidget />
 
             {/* あなたへの感謝・評価 */}
             <ThanksEvaluationCard />
