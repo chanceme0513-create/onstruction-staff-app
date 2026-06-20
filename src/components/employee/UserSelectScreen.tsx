@@ -13,6 +13,7 @@ export const STAFF_LIST: StaffUser[] = [
   { id: "staff-3", name: "佐藤 健", role: "施工スタッフ", avatar: "👷" },
   { id: "staff-4", name: "鈴木 誠", role: "施工スタッフ", avatar: "👷" },
   { id: "staff-5", name: "高橋 浩", role: "施工スタッフ", avatar: "👷" },
+  { id: "staff-test", name: "テスト用", role: "確認用アカウント", avatar: "🔍" },
 ];
 
 type Props = {
