@@ -126,7 +126,7 @@ export function NoticeboardModal({ isOpen, onClose }: Props) {
       </div>
 
       {/* 投稿フォーム */}
-      <PostNoticeForm isOpen={showPostForm} onClose={() => setShowPostForm(false)} />
+      <PostNoticeForm isOpen={showPostForm} postedBy="スタッフ" onClose={() => setShowPostForm(false)} onPosted={() => {}} />
     </>
   );
 }

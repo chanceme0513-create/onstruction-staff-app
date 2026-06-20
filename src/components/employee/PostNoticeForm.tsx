@@ -1,23 +1,43 @@
 "use client";
 
 import { useState } from "react";
+import { supabase } from "@/lib/supabase";
 
 type Props = {
   isOpen: boolean;
+  postedBy: string;
   onClose: () => void;
+  onPosted: () => void;
 };
 
-export function PostNoticeForm({ isOpen, onClose }: Props) {
+export function PostNoticeForm({ isOpen, postedBy, onClose, onPosted }: Props) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isPinned, setIsPinned] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   if (!isOpen) return null;
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!title.trim() || !content.trim()) {
       alert("タイトルと内容を入力してください");
+      return;
+    }
+    setSubmitting(true);
+
+    const { error } = await supabase.from("notices").insert({
+      title: title.trim(),
+      content: content.trim(),
+      posted_by: postedBy,
+      is_pinned: isPinned,
+    });
+
+    setSubmitting(false);
+
+    if (error) {
+      console.error(error);
+      alert("投稿に失敗しました。もう一度お試しください。");
       return;
     }
 
@@ -27,6 +47,7 @@ export function PostNoticeForm({ isOpen, onClose }: Props) {
       setTitle("");
       setContent("");
       setIsPinned(false);
+      onPosted();
       onClose();
     }, 1500);
   };
@@ -42,17 +63,13 @@ export function PostNoticeForm({ isOpen, onClose }: Props) {
       >
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-bold text-gray-800">📝 事務連絡を投稿</h2>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 text-2xl"
-          >
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-2xl">
             ×
           </button>
         </div>
 
         {!submitted ? (
           <div className="flex flex-col gap-4">
-            {/* タイトル */}
             <div>
               <label className="text-sm font-semibold text-gray-700 mb-2 block">
                 タイトル<span className="text-red-500 ml-1">*</span>
@@ -68,7 +85,6 @@ export function PostNoticeForm({ isOpen, onClose }: Props) {
               <p className="text-xs text-gray-400 mt-1">{title.length}/50文字</p>
             </div>
 
-            {/* 内容 */}
             <div>
               <label className="text-sm font-semibold text-gray-700 mb-2 block">
                 内容<span className="text-red-500 ml-1">*</span>
@@ -84,7 +100,6 @@ export function PostNoticeForm({ isOpen, onClose }: Props) {
               <p className="text-xs text-gray-400 mt-1">{content.length}/300文字</p>
             </div>
 
-            {/* ピン留めオプション */}
             <div className="flex items-center gap-2 bg-yellow-50 border border-yellow-200 rounded-lg px-4 py-3">
               <input
                 type="checkbox"
@@ -93,25 +108,15 @@ export function PostNoticeForm({ isOpen, onClose }: Props) {
                 onChange={(e) => setIsPinned(e.target.checked)}
                 className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-300"
               />
-              <label
-                htmlFor="pin-notice"
-                className="text-sm text-gray-700 cursor-pointer flex-1"
-              >
+              <label htmlFor="pin-notice" className="text-sm text-gray-700 cursor-pointer flex-1">
                 📍 この連絡を固定する（重要なお知らせ）
               </label>
             </div>
 
-            {/* プレビュー */}
             {(title || content) && (
               <div className="border-t pt-4">
                 <p className="text-xs font-semibold text-gray-500 mb-2">プレビュー</p>
-                <div
-                  className={`border rounded-xl px-4 py-3 ${
-                    isPinned
-                      ? "border-yellow-300 bg-yellow-50"
-                      : "border-gray-100 bg-white"
-                  }`}
-                >
+                <div className={`border rounded-xl px-4 py-3 ${isPinned ? "border-yellow-300 bg-yellow-50" : "border-gray-100 bg-white"}`}>
                   <h3 className="text-sm font-semibold text-gray-800 mb-2">
                     {isPinned && <span className="text-yellow-600 mr-1">📍</span>}
                     {title || "タイトルを入力してください"}
@@ -120,28 +125,28 @@ export function PostNoticeForm({ isOpen, onClose }: Props) {
                     {content || "内容を入力してください"}
                   </p>
                   <div className="flex items-center justify-between text-xs text-gray-500">
-                    <span className="font-medium">あなた</span>
+                    <span className="font-medium">{postedBy}</span>
                     <span>今</span>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* 投稿ボタン */}
             <button
               onClick={handleSubmit}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition-colors"
+              disabled={submitting}
+              className={`w-full font-semibold py-3 rounded-lg transition-colors ${
+                submitting ? "bg-gray-200 text-gray-400" : "bg-blue-500 hover:bg-blue-600 text-white"
+              }`}
             >
-              投稿する
+              {submitting ? "投稿中..." : "投稿する"}
             </button>
           </div>
         ) : (
           <div className="py-8 text-center">
             <div className="text-6xl mb-4">✅</div>
             <p className="text-lg font-bold text-gray-800 mb-2">投稿しました！</p>
-            <p className="text-sm text-gray-600">
-              チーム全員に通知されました
-            </p>
+            <p className="text-sm text-gray-600">チーム全員に通知されました</p>
           </div>
         )}
       </div>

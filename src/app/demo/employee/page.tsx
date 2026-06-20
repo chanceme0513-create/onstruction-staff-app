@@ -98,7 +98,7 @@ export default function DemoEmployeePage() {
             <ManagerCalendarWidget />
 
             {/* あなたへの感謝・評価 */}
-            <ThanksEvaluationCard />
+            <ThanksEvaluationCard userName={currentUser.name} />
 
             {/* チームのコンディション */}
             <TeamMood avgScore={3.9} totalMembers={12} checkedIn={4} />
@@ -115,7 +115,7 @@ export default function DemoEmployeePage() {
 
         {/* ===== 掲示板 ===== */}
         {activeTab === "noticeboard" && (
-          <NoticeboardScreen />
+          <NoticeboardScreen postedBy={currentUser.name} />
         )}
 
       </main>

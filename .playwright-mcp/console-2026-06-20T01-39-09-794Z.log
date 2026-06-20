@@ -563,3 +563,21 @@ https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/
 [ 1023565ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/4bb9c_next_dist_f6ff3daf._.js:2297
 [ 1023622ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/4bb9c_next_dist_f6ff3daf._.js:2297
 [ 1096206ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/4bb9c_next_dist_f6ff3daf._.js:2297
+[ 4020878ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/4bb9c_next_dist_f6ff3daf._.js:2297
+[ 4021120ms] [LOG] [Fast Refresh] done in 344ms @ http://localhost:3000/_next/static/chunks/4bb9c_next_dist_f6ff3daf._.js:2297
+[ 5389226ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/4bb9c_next_dist_f6ff3daf._.js:2297
+[ 5389236ms] [LOG] [Fast Refresh] done in 114ms @ http://localhost:3000/_next/static/chunks/4bb9c_next_dist_f6ff3daf._.js:2297
+[ 5398294ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/4bb9c_next_dist_f6ff3daf._.js:2297
+[ 5398613ms] [LOG] [Fast Refresh] done in 322ms @ http://localhost:3000/_next/static/chunks/4bb9c_next_dist_f6ff3daf._.js:2297
+[ 5410492ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/4bb9c_next_dist_f6ff3daf._.js:2297
+[ 5410529ms] [LOG] [Fast Refresh] done in 138ms @ http://localhost:3000/_next/static/chunks/4bb9c_next_dist_f6ff3daf._.js:2297
+[ 5665460ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/4bb9c_next_dist_f6ff3daf._.js:2297
+[ 5665616ms] [LOG] [Fast Refresh] done in 236ms @ http://localhost:3000/_next/static/chunks/4bb9c_next_dist_f6ff3daf._.js:2297
+[ 5680796ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/4bb9c_next_dist_f6ff3daf._.js:2297
+[ 5680817ms] [LOG] [Fast Refresh] done in 93ms @ http://localhost:3000/_next/static/chunks/4bb9c_next_dist_f6ff3daf._.js:2297
+[ 5706707ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/4bb9c_next_dist_f6ff3daf._.js:2297
+[ 5706738ms] [LOG] [Fast Refresh] done in 61ms @ http://localhost:3000/_next/static/chunks/4bb9c_next_dist_f6ff3daf._.js:2297
+[ 5713879ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/4bb9c_next_dist_f6ff3daf._.js:2297
+[ 5713897ms] [LOG] [Fast Refresh] done in 119ms @ http://localhost:3000/_next/static/chunks/4bb9c_next_dist_f6ff3daf._.js:2297
+[ 5750971ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/4bb9c_next_dist_f6ff3daf._.js:2297
+[ 5751037ms] [LOG] [Fast Refresh] done in 125ms @ http://localhost:3000/_next/static/chunks/4bb9c_next_dist_f6ff3daf._.js:2297

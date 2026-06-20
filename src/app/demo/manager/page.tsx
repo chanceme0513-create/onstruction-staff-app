@@ -591,7 +591,7 @@ export default function ManagerPage() {
 
         {/* ===== 掲示板 ===== */}
         {!loading && activeTab === "noticeboard" && (
-          <NoticeboardScreen />
+          <NoticeboardScreen postedBy="管理者" />
         )}
 
       </main>

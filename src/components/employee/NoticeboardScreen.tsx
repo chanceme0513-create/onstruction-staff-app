@@ -1,58 +1,56 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { supabase } from "@/lib/supabase";
 import { PostNoticeForm } from "./PostNoticeForm";
 
 type Notice = {
   id: string;
   title: string;
   content: string;
-  postedBy: string;
-  postedAt: string;
-  isPinned?: boolean;
+  posted_by: string;
+  posted_at: string;
+  is_pinned: boolean;
 };
 
-const DUMMY_NOTICES: Notice[] = [
-  {
-    id: "1",
-    title: "【重要】安全講習会のお知らせ",
-    content: "6月10日(月) 15:00より本社にて安全講習会を実施します。全員参加でお願いします。",
-    postedBy: "親方",
-    postedAt: "今日 08:30",
-    isPinned: true,
-  },
-  {
-    id: "2",
-    title: "A現場 進捗状況",
-    content: "本日午前中に基礎工事が完了しました。明日から鉄骨組み立てに入ります。",
-    postedBy: "山田リーダー",
-    postedAt: "今日 11:20",
-  },
-  {
-    id: "3",
-    title: "資材納品の遅延について",
-    content: "B現場の資材納品が6/5→6/7に変更となりました。作業スケジュールを調整します。",
-    postedBy: "親方",
-    postedAt: "昨日 16:45",
-  },
-  {
-    id: "4",
-    title: "今週の天気予報",
-    content: "今週は晴れが続く見込みです。熱中症対策を忘れずに！",
-    postedBy: "事務担当",
-    postedAt: "昨日 09:00",
-  },
-  {
-    id: "5",
-    title: "C現場 完工予定",
-    content: "C現場は予定通り6月15日に完工の見込みです。最終チェックをお願いします。",
-    postedBy: "山田リーダー",
-    postedAt: "2日前",
-  },
-];
+type Props = {
+  postedBy: string;
+};
 
-export function NoticeboardScreen() {
+function formatDate(isoString: string): string {
+  const date = new Date(isoString);
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffMin = Math.floor(diffMs / 60000);
+  const diffHour = Math.floor(diffMs / 3600000);
+  const diffDay = Math.floor(diffMs / 86400000);
+
+  if (diffMin < 1) return "たった今";
+  if (diffMin < 60) return `${diffMin}分前`;
+  if (diffHour < 24) return `今日 ${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
+  if (diffDay === 1) return "昨日";
+  return `${diffDay}日前`;
+}
+
+export function NoticeboardScreen({ postedBy }: Props) {
   const [showPostForm, setShowPostForm] = useState(false);
+  const [notices, setNotices] = useState<Notice[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchNotices = useCallback(async () => {
+    const { data, error } = await supabase
+      .from("notices")
+      .select("*")
+      .order("is_pinned", { ascending: false })
+      .order("posted_at", { ascending: false });
+
+    if (!error && data) setNotices(data);
+    setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    fetchNotices();
+  }, [fetchNotices]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -68,32 +66,47 @@ export function NoticeboardScreen() {
       </button>
 
       {/* お知らせ一覧 */}
-      <div className="flex flex-col gap-3">
-        {DUMMY_NOTICES.map((notice) => (
-          <div
-            key={notice.id}
-            className={`bg-white rounded-2xl border px-5 py-4 shadow-sm ${
-              notice.isPinned ? "border-yellow-300 bg-yellow-50" : "border-gray-100"
-            }`}
-          >
-            <div className="flex items-start gap-2 mb-2">
-              {notice.isPinned && (
-                <span className="text-yellow-600 text-sm mt-0.5 shrink-0">📍</span>
-              )}
-              <h3 className="text-sm font-semibold text-gray-800 flex-1 leading-snug">
-                {notice.title}
-              </h3>
+      {loading ? (
+        <div className="flex justify-center py-10">
+          <div className="w-6 h-6 rounded-full border-4 border-blue-200 border-t-blue-500 animate-spin" />
+        </div>
+      ) : notices.length === 0 ? (
+        <div className="bg-white rounded-2xl border border-gray-100 px-5 py-10 text-center">
+          <p className="text-gray-400 text-sm">まだ投稿がありません</p>
+        </div>
+      ) : (
+        <div className="flex flex-col gap-3">
+          {notices.map((notice) => (
+            <div
+              key={notice.id}
+              className={`bg-white rounded-2xl border px-5 py-4 shadow-sm ${
+                notice.is_pinned ? "border-yellow-300 bg-yellow-50" : "border-gray-100"
+              }`}
+            >
+              <div className="flex items-start gap-2 mb-2">
+                {notice.is_pinned && (
+                  <span className="text-yellow-600 text-sm mt-0.5 shrink-0">📍</span>
+                )}
+                <h3 className="text-sm font-semibold text-gray-800 flex-1 leading-snug">
+                  {notice.title}
+                </h3>
+              </div>
+              <p className="text-sm text-gray-700 leading-relaxed mb-3">{notice.content}</p>
+              <div className="flex items-center justify-between text-xs text-gray-500">
+                <span className="font-medium">{notice.posted_by}</span>
+                <span>{formatDate(notice.posted_at)}</span>
+              </div>
             </div>
-            <p className="text-sm text-gray-700 leading-relaxed mb-3">{notice.content}</p>
-            <div className="flex items-center justify-between text-xs text-gray-500">
-              <span className="font-medium">{notice.postedBy}</span>
-              <span>{notice.postedAt}</span>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
-      <PostNoticeForm isOpen={showPostForm} onClose={() => setShowPostForm(false)} />
+      <PostNoticeForm
+        isOpen={showPostForm}
+        postedBy={postedBy}
+        onClose={() => setShowPostForm(false)}
+        onPosted={fetchNotices}
+      />
     </div>
   );
 }
