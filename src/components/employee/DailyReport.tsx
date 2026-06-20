@@ -27,6 +27,7 @@ export function DailyReport({ currentUser }: Props) {
   const [answers, setAnswers] = useState<Record<number, Answer>>({});
   const [thanksMember, setThanksMember] = useState<string | null>(null);
   const [thanksTag, setThanksTag] = useState<string | null>(null);
+  const [thanksMessage, setThanksMessage] = useState("");
   const [note, setNote] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -72,6 +73,7 @@ export function DailyReport({ currentUser }: Props) {
       avg_score: Math.round(avgScore * 10) / 10,
       thanks_sent_to: thanksSentTo,
       thanks_tag: thanksTag,
+      thanks_message: thanksMessage.trim() || null,
       note: note.trim() || null,
       report_date: today,
     });
@@ -218,21 +220,30 @@ export function DailyReport({ currentUser }: Props) {
             </div>
 
             {thanksMember && (
-              <div className="flex flex-wrap gap-2">
-                {THANKS_TAGS.map((tag) => (
-                  <button
-                    key={tag}
-                    onClick={() => setThanksTag(thanksTag === tag ? null : tag)}
-                    className={`px-3 py-1.5 rounded-lg text-sm border transition-colors ${
-                      thanksTag === tag
-                        ? "bg-green-500 text-white border-green-500"
-                        : "bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100"
-                    }`}
-                  >
-                    {tag}
-                  </button>
-                ))}
-              </div>
+              <>
+                <div className="flex flex-wrap gap-2">
+                  {THANKS_TAGS.map((tag) => (
+                    <button
+                      key={tag}
+                      onClick={() => setThanksTag(thanksTag === tag ? null : tag)}
+                      className={`px-3 py-1.5 rounded-lg text-sm border transition-colors ${
+                        thanksTag === tag
+                          ? "bg-green-500 text-white border-green-500"
+                          : "bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100"
+                      }`}
+                    >
+                      {tag}
+                    </button>
+                  ))}
+                </div>
+                <textarea
+                  value={thanksMessage}
+                  onChange={(e) => setThanksMessage(e.target.value)}
+                  placeholder="一言メッセージ（任意）"
+                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-700 placeholder:text-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-green-300"
+                  rows={2}
+                />
+              </>
             )}
           </div>
         </div>

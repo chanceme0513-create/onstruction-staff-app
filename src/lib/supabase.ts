@@ -29,6 +29,7 @@ export type DailyReportRow = {
   avg_score: number;
   thanks_sent_to: string | null;
   thanks_tag: string | null;
+  thanks_message: string | null;
   note: string | null;
   report_date: string;
 };
