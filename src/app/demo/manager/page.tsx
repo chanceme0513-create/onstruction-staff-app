@@ -224,6 +224,141 @@ function ReportDetailModal({
   );
 }
 
+// ===== AI分析セクション =====
+type AiRecommendation = {
+  priority: "high" | "medium" | "low";
+  title: string;
+  reason: string;
+  action: string;
+};
+
+const AI_RECOMMENDATIONS: AiRecommendation[] = [
+  {
+    priority: "high",
+    title: "佐藤 健 への即時フォローが必要",
+    reason:
+      "体調スコア2・安全スコア2と、両方が危険水準です。本人から「疲れが溜まっている」との申し送りもあり、翌日の現場投入には慎重な判断が求められます。",
+    action:
+      "本日中に電話または直接声がけを行い、状態を確認してください。明日は高所・重機作業を避け、軽作業か休養を検討することを推奨します。",
+  },
+  {
+    priority: "medium",
+    title: "資材遅延による明日のスケジュールリスク",
+    reason:
+      "田中 太郎の申し送りに「資材納品遅延で明日の作業に影響が出る可能性」が報告されています。渋谷マンション現場の進捗に波及するリスクがあります。",
+    action:
+      "今夜中に納品業者へ連絡し、遅延の程度を確認してください。最悪の場合に備え、別作業への振り替え指示を準備しておくことを推奨します。",
+  },
+  {
+    priority: "low",
+    title: "チーム全体の安全意識を底上げするタイミング",
+    reason:
+      "提出済み4名中3名の安全スコアが4以下（田中3・佐藤2・鈴木4）。個別の問題ではなく、チーム全体の安全意識が低下傾向にある可能性があります。",
+    action:
+      "今週の朝礼で安全確認を1項目追加することを推奨します。ヒヤリハット事例の共有や、熱中症・高所作業の再確認が効果的です。",
+  },
+];
+
+const PRIORITY_CONFIG = {
+  high: {
+    label: "優先度：高",
+    bg: "bg-red-50",
+    border: "border-red-200",
+    badge: "bg-red-500 text-white",
+    titleColor: "text-red-800",
+    textColor: "text-red-700",
+    actionBg: "bg-red-100",
+    actionText: "text-red-800",
+  },
+  medium: {
+    label: "優先度：中",
+    bg: "bg-orange-50",
+    border: "border-orange-200",
+    badge: "bg-orange-400 text-white",
+    titleColor: "text-orange-800",
+    textColor: "text-orange-700",
+    actionBg: "bg-orange-100",
+    actionText: "text-orange-800",
+  },
+  low: {
+    label: "優先度：低",
+    bg: "bg-blue-50",
+    border: "border-blue-200",
+    badge: "bg-blue-400 text-white",
+    titleColor: "text-blue-800",
+    textColor: "text-blue-700",
+    actionBg: "bg-blue-100",
+    actionText: "text-blue-800",
+  },
+};
+
+function AiAnalysisSection() {
+  const [expanded, setExpanded] = useState<string | null>("high");
+
+  return (
+    <section className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+      {/* ヘッダー */}
+      <div className="bg-gradient-to-r from-slate-700 to-slate-800 px-5 py-4 flex items-center gap-3">
+        <div className="w-7 h-7 rounded-lg bg-white/15 flex items-center justify-center shrink-0">
+          <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+          </svg>
+        </div>
+        <div className="flex-1">
+          <p className="text-sm font-bold text-white">AI マネジメント提案</p>
+          <p className="text-xs text-slate-300 mt-0.5">本日の提出データを分析 · {AI_RECOMMENDATIONS.length}件の対応事項を検出</p>
+        </div>
+        <span className="text-[10px] text-slate-400 font-medium">17:50 更新</span>
+      </div>
+
+      {/* 提案リスト */}
+      <div className="divide-y divide-gray-50">
+        {AI_RECOMMENDATIONS.map((rec, i) => {
+          const config = PRIORITY_CONFIG[rec.priority];
+          const isOpen = expanded === rec.priority;
+
+          return (
+            <div key={i} className={`${isOpen ? config.bg : "bg-white"} transition-colors`}>
+              <button
+                onClick={() => setExpanded(isOpen ? null : rec.priority)}
+                className="w-full px-5 py-4 flex items-start gap-3 text-left"
+              >
+                <span className={`text-[10px] font-bold px-2 py-1 rounded-full shrink-0 mt-0.5 ${config.badge}`}>
+                  {config.label}
+                </span>
+                <p className={`text-sm font-semibold flex-1 leading-snug ${isOpen ? config.titleColor : "text-gray-700"}`}>
+                  {rec.title}
+                </p>
+                <svg
+                  className={`w-4 h-4 shrink-0 mt-0.5 transition-transform ${isOpen ? "rotate-180 text-gray-500" : "text-gray-300"}`}
+                  fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {isOpen && (
+                <div className="px-5 pb-4 flex flex-col gap-3">
+                  {/* 分析根拠 */}
+                  <div>
+                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">分析根拠</p>
+                    <p className={`text-sm leading-relaxed ${config.textColor}`}>{rec.reason}</p>
+                  </div>
+                  {/* 推奨アクション */}
+                  <div className={`${config.actionBg} rounded-xl px-4 py-3`}>
+                    <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1.5">推奨アクション</p>
+                    <p className={`text-sm leading-relaxed font-medium ${config.actionText}`}>{rec.action}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 // ===== タブナビゲーション =====
 const TABS: { id: ManagerTab; label: string }[] = [
   { id: "dashboard", label: "ダッシュボード" },
@@ -325,6 +460,9 @@ export default function ManagerPage() {
                 ))}
               </div>
             )}
+
+            {/* AI マネジメント提案 */}
+            <AiAnalysisSection />
 
             {/* 申し送りあり */}
             {hasNotes > 0 && (
