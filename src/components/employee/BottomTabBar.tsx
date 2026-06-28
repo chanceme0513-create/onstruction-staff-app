@@ -46,11 +46,11 @@ export function BottomTabBar({ activeTab, onTabChange }: Props) {
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
               className={`flex-1 flex flex-col items-center gap-0.5 py-2.5 transition-colors ${
-                isActive ? "text-blue-600" : "text-gray-400 hover:text-gray-600"
+                isActive ? "text-[#e8836e]" : "text-gray-400 hover:text-gray-600"
               }`}
             >
               {tab.icon}
-              <span className={`text-[10px] font-medium ${isActive ? "text-blue-600" : "text-gray-400"}`}>
+              <span className={`text-[10px] font-medium ${isActive ? "text-[#e8836e]" : "text-gray-400"}`}>
                 {tab.label}
               </span>
             </button>

@@ -10,7 +10,7 @@ const CONDITION_QUESTIONS = [
   { id: 1, key: "score_health", text: "本日の体調はいかがでしたか？" },
   { id: 2, key: "score_progress", text: "作業の進捗は順調でしたか？" },
   { id: 3, key: "score_teamwork", text: "チーム内の連携は取れていましたか？" },
-  { id: 4, key: "score_safety", text: "安全面で気になることはありましたか？（5＝問題なし）" },
+  { id: 4, key: "score_safety", text: "職場環境で気になることはありましたか？（5＝問題なし）" },
   { id: 5, key: "score_motivation", text: "明日への意欲はいかがですか？" },
 ];
 
@@ -21,7 +21,7 @@ type Props = {
 };
 
 export function DailyReport({ currentUser }: Props) {
-  const [siteName, setSiteName] = useState("");
+  const [siteName, setSiteName] = useState(""); // 業務内容として使用
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [answers, setAnswers] = useState<Record<number, Answer>>({});
@@ -122,12 +122,12 @@ export function DailyReport({ currentUser }: Props) {
           </p>
           <div className="flex flex-col gap-3">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">現場名</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">業務内容</label>
               <input
                 type="text"
                 value={siteName}
                 onChange={(e) => setSiteName(e.target.value)}
-                placeholder="例：〇〇ビル新築工事"
+                placeholder="例：クライアント提案 / 資料作成 / ミーティング"
                 className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300"
               />
             </div>
@@ -271,7 +271,7 @@ export function DailyReport({ currentUser }: Props) {
             disabled={!canSubmit || submitting}
             className={`w-full py-3 rounded-xl text-sm font-bold transition-colors ${
               canSubmit && !submitting
-                ? "bg-blue-600 hover:bg-blue-700 text-white"
+                ? "bg-[#e8836e] hover:bg-[#d4705c] text-white"
                 : "bg-gray-100 text-gray-400 cursor-not-allowed"
             }`}
           >
@@ -279,7 +279,7 @@ export function DailyReport({ currentUser }: Props) {
           </button>
           {!canSubmit && (
             <p className="text-xs text-gray-400 text-center">
-              現場名・勤務時間・コンディション確認をすべて入力してください
+              業務内容・勤務時間・コンディション確認をすべて入力してください
             </p>
           )}
         </div>
