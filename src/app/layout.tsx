@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "建築会社スタッフアプリ",
-  description: "建築会社向け従業員コンディション管理・予定共有・事務連絡アプリ",
+  title: "STAPO",
+  description: "従業員コンディション管理・サーベイ・チームコミュニケーションツール",
   openGraph: {
-    title: "建築会社スタッフアプリ",
-    description: "従業員のコンディション管理・予定共有・事務連絡をサポート",
+    title: "STAPO",
+    description: "従業員のコンディション管理・サーベイ・チームコミュニケーションをサポート",
     type: "website",
   },
 };
