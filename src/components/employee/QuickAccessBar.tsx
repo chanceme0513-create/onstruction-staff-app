@@ -14,7 +14,7 @@ export function QuickAccessBar({ onCalendarClick, onNoticeClick }: Props) {
           className="flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-xl transition-all active:scale-95"
         >
           <span className="text-xl">📅</span>
-          <span>親方の予定</span>
+          <span>リーダーの予定</span>
         </button>
         <button
           onClick={onNoticeClick}

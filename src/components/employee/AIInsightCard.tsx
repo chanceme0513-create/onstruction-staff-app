@@ -26,7 +26,7 @@ export function AIInsightCard({ userName = "あなた" }: Props) {
           <div>
             <p className="text-xs font-semibold text-slate-800">総合パフォーマンス：優秀</p>
             <p className="text-[11px] text-slate-500 leading-relaxed mt-0.5">
-              顧客・チーム両面でスコアが高く、今月は特に評価が伸びています。
+              チーム内評価のスコアが高く、今月は特に評価が伸びています。
             </p>
           </div>
         </div>
@@ -34,17 +34,10 @@ export function AIInsightCard({ userName = "あなた" }: Props) {
         {/* インサイト一覧 */}
         <div className="flex flex-col gap-2.5">
           <InsightRow
-            icon="customer"
-            label="顧客対応"
-            value="上位10%"
-            detail="「説明の丁寧さ」が先月比+12%"
-            color="orange"
-          />
-          <InsightRow
             icon="team"
             label="チーム連携"
             value="安定高評価"
-            detail="同僚からのサンクス受信数が平均の2.1倍"
+            detail="仲間からのサンクス受信数が平均の 2.1倍"
             color="blue"
           />
           <InsightRow
@@ -60,7 +53,7 @@ export function AIInsightCard({ userName = "あなた" }: Props) {
         <div className="mt-1 bg-[#fdf1ee] rounded-lg px-3 py-2.5 border border-[#f5c9be]">
           <p className="text-[11px] text-[#b85e48] leading-relaxed">
             <span className="font-bold">AIコメント：</span>
-            {userName.split(" ")[0]}さんの「親切な対応」タグ獲得数は先月から継続増加中です。この強みをチーム内で共有する機会を設けることで、チーム全体のスコア向上が期待できます。
+            {userName.split(" ")[0]}さんの「丁寧な仕事ぶり」タグ獲得数は先月から継続増加中です。この強みをチーム内で共有する機会を設けることで、現場全体のスコア向上が期待できます。
           </p>
         </div>
       </div>
@@ -69,7 +62,7 @@ export function AIInsightCard({ userName = "あなた" }: Props) {
 }
 
 type InsightRowProps = {
-  icon: "customer" | "team" | "trend";
+  icon: "client" | "team" | "trend";
   label: string;
   value: string;
   detail: string;
@@ -86,7 +79,7 @@ function InsightRow({ icon, label, value, detail, color }: InsightRowProps) {
   return (
     <div className="flex items-start gap-3">
       <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 ${colorMap[color]}`}>
-        {icon === "customer" && (
+        {icon === "client" && (
           <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
           </svg>

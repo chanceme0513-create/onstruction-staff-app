@@ -35,32 +35,32 @@ function formatDate(isoString: string): string {
 const DUMMY_NOTICES: Notice[] = [
   {
     id: "dummy-1",
-    title: "今月の目標設定について",
-    content: "今月の個人目標シートの提出期限は今週金曜日です。各自マネージャーと確認の上、提出をお願いします。",
+    title: "安全作業マニュアル更新のお知らせ",
+    content: "熱中症対策マニュアルを更新しました。今週中に各自確認し、現場でのルールを徹底してください。不明点はリーダーまで。",
     posted_by: "管理者",
     posted_at: new Date(Date.now() - 2 * 3600000).toISOString(),
     is_pinned: true,
   },
   {
     id: "dummy-2",
-    title: "来週の全体ミーティング変更のお知らせ",
-    content: "来週火曜日の全体MTGは、会議室Aの都合により14:00→15:00に変更となりました。ご確認ください。",
+    title: "A現場の工程変更について",
+    content: "来週月曜日のA現場（中央区3丁目）の工程が変更となりました。鉄筋組み立て→型枠設置の順に変更。詳細はリーダーから直接連絡があります。",
     posted_by: "田中 太郎",
     posted_at: new Date(Date.now() - 5 * 3600000).toISOString(),
     is_pinned: false,
   },
   {
     id: "dummy-3",
-    title: "先週のチームランチありがとうございました",
-    content: "先週のランチ会、みなさん参加ありがとうございました！また来月も開催予定です。お楽しみに。",
+    title: "先週の安全会議ありがとうございました",
+    content: "先週の安全会議、皆さん参加ありがとうございました！ヒヤリハット事例の共有が非常に参考になりました。来月も開催予定です。",
     posted_by: "鈴木 誠",
     posted_at: new Date(Date.now() - 26 * 3600000).toISOString(),
     is_pinned: false,
   },
   {
     id: "dummy-4",
-    title: "備品補充のお知らせ",
-    content: "コピー用紙・ボールペンを補充しました。引き続き節約してご利用ください。不足があればSlackでご連絡を。",
+    title: "工具・備品の補充について",
+    content: "電動ドリル・安全帯・ヘルメットを補充しました。使用後は必ず所定の場所に返却してください。破損や不足があれば山田まで連絡を。",
     posted_by: "山田 次郎",
     posted_at: new Date(Date.now() - 2 * 86400000).toISOString(),
     is_pinned: false,
@@ -110,8 +110,8 @@ export function NoticeboardScreen({ postedBy }: Props) {
           <div className="w-6 h-6 rounded-full border-4 border-stone-200 border-t-[#e8836e] animate-spin" />
         </div>
       ) : notices.length === 0 ? (
-        <div className="bg-white rounded-2xl border border-gray-100 px-5 py-10 text-center">
-          <p className="text-gray-400 text-sm">まだ投稿がありません</p>
+        <div className="bg-white rounded-2xl border border-stone-100 px-5 py-10 text-center">
+          <p className="text-stone-400 text-sm">まだ投稿がありません</p>
         </div>
       ) : (
         <div className="flex flex-col gap-3">
@@ -119,19 +119,19 @@ export function NoticeboardScreen({ postedBy }: Props) {
             <div
               key={notice.id}
               className={`bg-white rounded-2xl border px-5 py-4 shadow-sm ${
-                notice.is_pinned ? "border-yellow-300 bg-yellow-50" : "border-gray-100"
+                notice.is_pinned ? "border-yellow-300 bg-yellow-50" : "border-stone-100"
               }`}
             >
               <div className="flex items-start gap-2 mb-2">
                 {notice.is_pinned && (
                   <span className="text-yellow-600 text-sm mt-0.5 shrink-0">📍</span>
                 )}
-                <h3 className="text-sm font-semibold text-gray-800 flex-1 leading-snug">
+                <h3 className="text-sm font-semibold text-stone-800 flex-1 leading-snug">
                   {notice.title}
                 </h3>
               </div>
-              <p className="text-sm text-gray-700 leading-relaxed mb-3">{notice.content}</p>
-              <div className="flex items-center justify-between text-xs text-gray-500">
+              <p className="text-sm text-stone-600 leading-relaxed mb-3">{notice.content}</p>
+              <div className="flex items-center justify-between text-xs text-stone-400">
                 <span className="font-medium">{notice.posted_by}</span>
                 <span>{formatDate(notice.posted_at)}</span>
               </div>

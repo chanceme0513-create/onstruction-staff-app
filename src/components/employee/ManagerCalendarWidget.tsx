@@ -11,13 +11,14 @@ type Schedule = {
 };
 
 const DUMMY_SCHEDULES: Schedule[] = [
-  { id: "1", date: "2026-06-20", time: "09:00", title: "プロジェクトA 確認MTG", location: "第1会議室" },
-  { id: "2", date: "2026-06-20", time: "14:00", title: "プロジェクトB 定例会議", location: "オンライン" },
-  { id: "3", date: "2026-06-22", time: "10:00", title: "備品発注" },
-  { id: "4", date: "2026-06-22", time: "15:00", title: "プロジェクトC 進捗確認", location: "第2会議室" },
-  { id: "5", date: "2026-06-24", time: "終日", title: "事務作業" },
-  { id: "6", date: "2026-06-25", time: "13:00", title: "全体ミーティング", location: "本社" },
-  { id: "7", date: "2026-06-28", time: "10:00", title: "プロジェクトD キックオフ", location: "第3会議室" },
+  { id: "1", date: "2026-07-11", time: "09:00", title: "A現場 立会い検査", location: "中央区3丁目" },
+  { id: "2", date: "2026-07-11", time: "14:00", title: "B現場 打ち合わせ", location: "西区12丁目" },
+  { id: "3", date: "2026-07-14", time: "10:00", title: "資材発注" },
+  { id: "4", date: "2026-07-14", time: "15:00", title: "B現場 進捗確認", location: "東区5丁目" },
+  { id: "5", date: "2026-07-16", time: "終日", title: "安全パトロール", location: "各現場" },
+  { id: "6", date: "2026-07-18", time: "13:00", title: "安全会議", location: "本社" },
+  { id: "7", date: "2026-07-22", time: "10:00", title: "C現場 着工", location: "南区8丁目" },
+  { id: "8", date: "2026-07-25", time: "09:00", title: "竣工検査", location: "北区2丁目" },
 ];
 
 const WEEK_DAYS = ["日", "月", "火", "水", "木", "金", "土"];
@@ -27,8 +28,8 @@ function toDateStr(date: Date) {
 }
 
 export function ManagerCalendarWidget() {
-  const [currentMonth] = useState(new Date(2026, 5, 1));
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date(2026, 5, 20));
+  const [currentMonth] = useState(new Date(2026, 6, 1));
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date(2026, 6, 11));
 
   const year = currentMonth.getFullYear();
   const month = currentMonth.getMonth();
@@ -48,7 +49,7 @@ export function ManagerCalendarWidget() {
     DUMMY_SCHEDULES.filter((s) => s.date === toDateStr(date));
 
   const selectedSchedules = selectedDate ? getSchedulesForDate(selectedDate) : [];
-  const today = toDateStr(new Date(2026, 5, 20));
+  const today = toDateStr(new Date(2026, 6, 11));
 
   return (
     <section className="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
@@ -59,7 +60,7 @@ export function ManagerCalendarWidget() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
           </div>
-          <h2 className="text-sm font-bold text-stone-800">マネージャーの予定</h2>
+          <h2 className="text-sm font-bold text-stone-800">リーダーの予定</h2>
         </div>
         <span className="ml-auto text-xs text-stone-400">{year}年{month + 1}月</span>
       </div>

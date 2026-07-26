@@ -90,7 +90,7 @@ export function BossScheduleCalendar() {
   return (
     <section className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-sm font-semibold text-gray-700">📅 親方の予定</h2>
+        <h2 className="text-sm font-semibold text-gray-700">📅 リーダーの予定</h2>
         <span className="text-sm text-gray-600 font-medium">
           {year}年{month + 1}月
         </span>

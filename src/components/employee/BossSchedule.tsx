@@ -54,7 +54,7 @@ export function BossSchedule() {
   return (
     <section className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-sm font-semibold text-gray-700">📅 親方の予定</h2>
+        <h2 className="text-sm font-semibold text-gray-700">📅 リーダーの予定</h2>
         <button
           onClick={() => setExpanded(!expanded)}
           className="text-xs text-blue-500 hover:text-blue-600 font-medium"

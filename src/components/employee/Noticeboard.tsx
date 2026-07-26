@@ -16,7 +16,7 @@ const DUMMY_NOTICES: Notice[] = [
     id: "1",
     title: "【重要】安全講習会のお知らせ",
     content: "6月10日(月) 15:00より本社にて安全講習会を実施します。全員参加でお願いします。",
-    postedBy: "親方",
+    postedBy: "リーダー",
     postedAt: "今日 08:30",
     isPinned: true,
   },
@@ -31,7 +31,7 @@ const DUMMY_NOTICES: Notice[] = [
     id: "3",
     title: "資材納品の遅延について",
     content: "B現場の資材納品が6/5→6/7に変更となりました。作業スケジュールを調整します。",
-    postedBy: "親方",
+    postedBy: "リーダー",
     postedAt: "昨日 16:45",
   },
   {

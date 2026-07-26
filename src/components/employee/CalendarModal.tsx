@@ -106,7 +106,7 @@ export function CalendarModal({ isOpen, onClose }: Props) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-bold text-gray-800">📅 親方の予定</h2>
+          <h2 className="text-lg font-bold text-gray-800">📅 リーダーの予定</h2>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-gray-600 text-2xl"
