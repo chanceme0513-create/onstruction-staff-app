@@ -15,24 +15,24 @@ const SCHEDULE_DAYS: DaySchedule[] = [
     label: "今日",
     date: "6/20（金）",
     items: [
-      { time: "09:00", title: "A現場 立会い検査", location: "中央区3丁目" },
-      { time: "14:00", title: "B現場 打ち合わせ", location: "西区12丁目" },
+      { time: "09:00", title: "プロジェクトA 確認MTG", location: "中央区3丁目" },
+      { time: "14:00", title: "プロジェクトB 定例会議", location: "西区12丁目" },
     ],
   },
   {
     label: "明日",
     date: "6/21（土）",
     items: [
-      { time: "10:00", title: "資材発注" },
-      { time: "15:00", title: "C現場 進捗確認", location: "東区5丁目" },
+      { time: "10:00", title: "備品発注" },
+      { time: "15:00", title: "プロジェクトC 進捗確認", location: "東区5丁目" },
     ],
   },
   {
     label: "来週",
     date: "6/23（月）〜",
     items: [
-      { time: "6/23 13:00", title: "安全会議", location: "本社" },
-      { time: "6/24 10:00", title: "D現場 着工", location: "南区8丁目" },
+      { time: "6/23 13:00", title: "全体ミーティング", location: "本社" },
+      { time: "6/24 10:00", title: "プロジェクトD キックオフ", location: "南区8丁目" },
     ],
   },
 ];
@@ -44,7 +44,7 @@ export function ManagerScheduleWidget() {
         <svg className="w-4 h-4 text-blue-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
-        <h2 className="text-sm font-bold text-gray-800">リーダーの予定</h2>
+        <h2 className="text-sm font-bold text-gray-800">マネージャーの予定</h2>
       </div>
 
       <div className="divide-y divide-gray-50">

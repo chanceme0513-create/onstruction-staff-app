@@ -9,11 +9,11 @@ type Employee = {
 };
 
 const TEAM_MEMBERS: Employee[] = [
-  { id: "1", name: "山田リーダー", avatar: "👨‍🔧" },
-  { id: "2", name: "佐藤", avatar: "🧑‍🔧" },
+  { id: "1", name: "山田リーダー", avatar: "👨‍💼" },
+  { id: "2", name: "佐藤", avatar: "👩‍💼" },
   { id: "3", name: "鈴木", avatar: "👨‍💼" },
-  { id: "4", name: "高橋", avatar: "👷" },
-  { id: "5", name: "伊藤", avatar: "🧑‍🏭" },
+  { id: "4", name: "高橋", avatar: "🧑‍💼" },
+  { id: "5", name: "伊藤", avatar: "👩‍💼" },
 ];
 
 const QUICK_TAGS = [

@@ -1,71 +1,35 @@
 "use client";
 
-type Performer = {
-  id: string;
-  name: string;
-  avatar: string;
-  category: string;
-  value: string;
-  badge: string;
-};
-
-const TOP_PERFORMERS: Performer[] = [
-  {
-    id: "1",
-    name: "山田 次郎",
-    avatar: "👨‍🔧",
-    category: "最高スコア",
-    value: "5.0",
-    badge: "🏆",
-  },
-  {
-    id: "2",
-    name: "田中 太郎",
-    avatar: "👷",
-    category: "感謝送信",
-    value: "18回",
-    badge: "💚",
-  },
-  {
-    id: "3",
-    name: "鈴木 誠",
-    avatar: "👨‍💼",
-    category: "安全意識",
-    value: "5.0",
-    badge: "⚠️",
-  },
+const TOP_PERFORMERS = [
+  { name: "山田 次郎", avatar: "👨‍💼", category: "最高スコア", value: "5.0" },
+  { name: "田中 太郎", avatar: "🧑‍💼", category: "感謝送信数", value: "18回" },
+  { name: "鈴木 誠",   avatar: "👨‍💼", category: "職場環境",   value: "5.0" },
 ];
 
 export function TopPerformers() {
   return (
-    <section className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
-      <h2 className="text-sm font-semibold text-gray-700 mb-4">⭐ 今週のMVP</h2>
+    <section className="bg-white rounded-lg border border-slate-200 overflow-hidden">
+      <div className="px-4 py-3 border-b border-slate-100">
+        <h2 className="text-sm font-semibold text-slate-800">今週のMVP</h2>
+      </div>
 
-      <div className="flex flex-col gap-3">
-        {TOP_PERFORMERS.map((performer) => (
-          <div
-            key={performer.id}
-            className="bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-xl px-4 py-3"
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-3xl">{performer.avatar}</span>
-              <div className="flex-1">
-                <p className="text-sm font-semibold text-gray-800">{performer.name}</p>
-                <p className="text-xs text-gray-600">{performer.category}</p>
-              </div>
-              <div className="text-right">
-                <p className="text-xl font-bold text-gray-800">{performer.value}</p>
-                <span className="text-2xl">{performer.badge}</span>
-              </div>
+      <div className="divide-y divide-slate-100">
+        {TOP_PERFORMERS.map((p, i) => (
+          <div key={i} className="flex items-center gap-3 px-4 py-3">
+            <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-sm shrink-0">
+              {p.avatar}
             </div>
+            <div className="flex-1">
+              <p className="text-sm font-medium text-slate-800">{p.name}</p>
+              <p className="text-[11px] text-slate-400">{p.category}</p>
+            </div>
+            <span className="text-sm font-bold text-slate-900">{p.value}</span>
           </div>
         ))}
       </div>
 
-      <div className="mt-4 bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 text-center">
-        <p className="text-xs text-blue-700">
-          💡 月末に表彰式を開催して、チームのモチベーションを高めましょう
-        </p>
+      <div className="px-4 py-2.5 bg-blue-50 border-t border-blue-100">
+        <p className="text-xs text-blue-600">月末に表彰式を開催してモチベーションを高めましょう</p>
       </div>
     </section>
   );
