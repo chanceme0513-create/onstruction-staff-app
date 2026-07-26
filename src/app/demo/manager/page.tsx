@@ -94,6 +94,22 @@ const TEAM_DIMS = [
   { label: "意欲", score: 4.0 },
 ];
 
+const CLIENT_EVAL = {
+  score: 4.6,
+  totalRatings: 28,
+  trendLabel: "↑ 先月+0.2",
+  keywords: [
+    { label: "説明が分かりやすい", count: 18 },
+    { label: "対応が速い", count: 15 },
+    { label: "また来たい", count: 12 },
+  ],
+  voices: [
+    { name: "匿名", text: "丁寧に説明していただき、とても安心できました。また担当してほしいです。", rating: 5, timeAgo: "2日前" },
+    { name: "匿名", text: "問い合わせへの返信が早く、スムーズに進みました。ありがとうございました。", rating: 5, timeAgo: "3日前" },
+    { name: "匿名", text: "とても丁寧な対応で満足しています。また利用したいと思います。", rating: 4, timeAgo: "4日前" },
+  ],
+};
+
 function ScoreBadge({ score }: { score: number }) {
   const color =
     score < 3.0
@@ -371,13 +387,18 @@ export default function ManagerPage() {
                 <p className="text-sm font-bold text-stone-800">今日のチームサマリー</p>
                 <span className="text-[10px] text-stone-400">7月11日 リアルタイム</span>
               </div>
-              <div className="grid grid-cols-2 gap-0 divide-x divide-stone-100">
-                <div className="text-center pr-3">
+              <div className="grid grid-cols-3 gap-0 divide-x divide-stone-100">
+                <div className="text-center pr-2">
                   <p className="text-[10px] text-stone-400 mb-1">チームスコア</p>
                   <p className="text-2xl font-black text-sky-600">{avgScore.toFixed(1)}</p>
                   <p className="text-[10px] text-emerald-500 font-semibold mt-0.5">↑ 先週+0.3</p>
                 </div>
-                <div className="text-center pl-3">
+                <div className="text-center px-2">
+                  <p className="text-[10px] text-stone-400 mb-1">顧客満足度</p>
+                  <p className="text-2xl font-black text-orange-500">{CLIENT_EVAL.score}</p>
+                  <p className="text-[10px] text-emerald-500 font-semibold mt-0.5">{CLIENT_EVAL.trendLabel}</p>
+                </div>
+                <div className="text-center pl-2">
                   <p className="text-[10px] text-stone-400 mb-1">要注意</p>
                   <p className={`text-2xl font-black ${alertCount > 0 ? "text-red-500" : "text-stone-300"}`}>{alertCount}名</p>
                   <p className={`text-[10px] font-semibold mt-0.5 ${alertCount > 0 ? "text-red-400" : "text-stone-300"}`}>
@@ -435,6 +456,61 @@ export default function ManagerPage() {
                 ))}
               </div>
             )}
+
+            {/* 顧客評価 */}
+            <div className="bg-white rounded-2xl border border-stone-100 shadow-sm p-4">
+              <div className="flex items-center gap-1.5 mb-3">
+                <div className="w-2 h-2 rounded-full bg-orange-400 shrink-0" />
+                <p className="text-xs font-bold text-stone-700">顧客評価</p>
+                <span className="ml-auto text-[10px] text-stone-400">今月 {CLIENT_EVAL.totalRatings}件</span>
+              </div>
+              <div className="flex items-end gap-1 mb-1">
+                <span className="text-3xl font-black text-orange-500 leading-none">{CLIENT_EVAL.score}</span>
+                <span className="text-xs text-stone-400 pb-0.5">/5.0</span>
+              </div>
+              <div className="h-1.5 bg-orange-100 rounded-full mb-2">
+                <div className="h-1.5 bg-orange-400 rounded-full" style={{ width: `${(CLIENT_EVAL.score / 5) * 100}%` }} />
+              </div>
+              <p className="text-[10px] text-emerald-600 font-semibold mb-3">{CLIENT_EVAL.trendLabel}</p>
+              <p className="text-[10px] text-stone-400 font-semibold mb-2">よく選ばれたキーワード</p>
+              <div className="flex flex-col gap-1">
+                {CLIENT_EVAL.keywords.map((kw) => (
+                  <div key={kw.label} className="flex items-center gap-2">
+                    <span className="text-[10px] text-stone-600">{kw.label}</span>
+                    <div className="flex-1 h-1 bg-orange-100 rounded-full">
+                      <div className="h-1 bg-orange-300 rounded-full" style={{ width: `${(kw.count / 20) * 100}%` }} />
+                    </div>
+                    <span className="text-[10px] text-stone-400">{kw.count}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 最近の顧客の声 */}
+            <section className="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+              <div className="px-5 py-4 border-b border-stone-100 flex items-center justify-between">
+                <h2 className="text-sm font-bold text-stone-800">最近の顧客の声</h2>
+                <a href="/demo/customer" className="text-xs text-[#e8836e] font-medium">評価フォームを開く →</a>
+              </div>
+              <div className="divide-y divide-stone-50">
+                {CLIENT_EVAL.voices.map((v, i) => (
+                  <div key={i} className="px-5 py-3.5">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <div className="flex gap-0.5">
+                        {[1,2,3,4,5].map((s) => (
+                          <svg key={s} className={`w-3 h-3 ${s <= v.rating ? "text-amber-400" : "text-stone-200"}`} fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                          </svg>
+                        ))}
+                      </div>
+                      <span className="text-[10px] text-stone-400 ml-auto">{v.timeAgo}</span>
+                    </div>
+                    <p className="text-xs text-stone-600 leading-relaxed">&ldquo;{v.text}&rdquo;</p>
+                    <p className="text-[10px] text-stone-400 mt-1">{v.name}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
 
             {/* AI提案 */}
             <AiAnalysisSection />
