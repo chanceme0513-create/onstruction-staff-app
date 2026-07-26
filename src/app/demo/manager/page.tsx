@@ -408,8 +408,9 @@ export default function ManagerPage() {
               </div>
             </div>
 
-            {/* チーム状態 */}
-            <div>
+            {/* チーム状態 ＆ 顧客評価（横並び） */}
+            <div className="grid grid-cols-2 gap-3 items-start">
+              {/* チーム状態 */}
               <div className="bg-white rounded-2xl border border-stone-100 shadow-sm p-4">
                 <div className="flex items-center gap-1.5 mb-3">
                   <div className="w-2 h-2 rounded-full bg-sky-500 shrink-0" />
@@ -437,6 +438,32 @@ export default function ManagerPage() {
                 </div>
                 <p className="text-[10px] text-stone-300 mt-2.5">本日 {submittedCount}名提出</p>
               </div>
+
+              {/* 顧客評価 */}
+              <div className="bg-white rounded-2xl border border-stone-100 shadow-sm p-4">
+                <div className="flex items-center gap-1.5 mb-3">
+                  <div className="w-2 h-2 rounded-full bg-orange-400 shrink-0" />
+                  <p className="text-xs font-bold text-stone-700">顧客評価</p>
+                </div>
+                <div className="flex items-end gap-1 mb-1">
+                  <span className="text-3xl font-black text-orange-500 leading-none">{CLIENT_EVAL.score}</span>
+                  <span className="text-xs text-stone-400 pb-0.5">/5.0</span>
+                </div>
+                <div className="h-1.5 bg-orange-100 rounded-full mb-2">
+                  <div className="h-1.5 bg-orange-400 rounded-full" style={{ width: `${(CLIENT_EVAL.score / 5) * 100}%` }} />
+                </div>
+                <p className="text-[10px] text-emerald-600 font-semibold mb-3">{CLIENT_EVAL.trendLabel}</p>
+                <p className="text-[10px] text-stone-400 font-semibold mb-2">よく選ばれたキーワード</p>
+                <div className="flex flex-col gap-1">
+                  {CLIENT_EVAL.keywords.map((kw) => (
+                    <div key={kw.label} className="flex items-center justify-between gap-1">
+                      <span className="text-[10px] text-stone-600 leading-snug">{kw.label}</span>
+                      <span className="text-[10px] font-bold text-orange-400 shrink-0">{kw.count}</span>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-[10px] text-stone-300 mt-2.5">今月 {CLIENT_EVAL.totalRatings}件</p>
+              </div>
             </div>
 
             {/* 要注意アラート */}
@@ -456,35 +483,6 @@ export default function ManagerPage() {
                 ))}
               </div>
             )}
-
-            {/* 顧客評価 */}
-            <div className="bg-white rounded-2xl border border-stone-100 shadow-sm p-4">
-              <div className="flex items-center gap-1.5 mb-3">
-                <div className="w-2 h-2 rounded-full bg-orange-400 shrink-0" />
-                <p className="text-xs font-bold text-stone-700">顧客評価</p>
-                <span className="ml-auto text-[10px] text-stone-400">今月 {CLIENT_EVAL.totalRatings}件</span>
-              </div>
-              <div className="flex items-end gap-1 mb-1">
-                <span className="text-3xl font-black text-orange-500 leading-none">{CLIENT_EVAL.score}</span>
-                <span className="text-xs text-stone-400 pb-0.5">/5.0</span>
-              </div>
-              <div className="h-1.5 bg-orange-100 rounded-full mb-2">
-                <div className="h-1.5 bg-orange-400 rounded-full" style={{ width: `${(CLIENT_EVAL.score / 5) * 100}%` }} />
-              </div>
-              <p className="text-[10px] text-emerald-600 font-semibold mb-3">{CLIENT_EVAL.trendLabel}</p>
-              <p className="text-[10px] text-stone-400 font-semibold mb-2">よく選ばれたキーワード</p>
-              <div className="flex flex-col gap-1">
-                {CLIENT_EVAL.keywords.map((kw) => (
-                  <div key={kw.label} className="flex items-center gap-2">
-                    <span className="text-[10px] text-stone-600">{kw.label}</span>
-                    <div className="flex-1 h-1 bg-orange-100 rounded-full">
-                      <div className="h-1 bg-orange-300 rounded-full" style={{ width: `${(kw.count / 20) * 100}%` }} />
-                    </div>
-                    <span className="text-[10px] text-stone-400">{kw.count}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
 
             {/* 最近の顧客の声 */}
             <section className="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
