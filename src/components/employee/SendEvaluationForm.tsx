@@ -24,11 +24,11 @@ const THANKS_TAGS = [
 ];
 
 const SKILL_TAGS = [
-  { label: "技術が高い", emoji: "🔨" },
-  { label: "仕上がりが丁寧", emoji: "⭐" },
-  { label: "作業が速い", emoji: "⚡" },
+  { label: "クオリティが高い", emoji: "⭐" },
+  { label: "仕上がりが丁寧", emoji: "✨" },
+  { label: "対応が速い", emoji: "⚡" },
   { label: "段取りが上手", emoji: "📋" },
-  { label: "安全意識が高い", emoji: "⚠️" },
+  { label: "提案が上手い", emoji: "💡" },
 ];
 
 export function SendEvaluationForm() {

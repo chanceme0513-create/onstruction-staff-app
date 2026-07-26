@@ -21,21 +21,21 @@ type StaffSummary = {
 };
 
 const DUMMY_ROWS: ReportRow[] = [
-  { id: "1", staff_name: "田中 太郎", report_date: "2026-07-11", site_name: "A現場 鉄筋組み立て", start_time: "08:00", end_time: "17:00", hours_worked: 9.0, submitted_at: "2026-07-11T17:05:00Z" },
-  { id: "2", staff_name: "山田 次郎", report_date: "2026-07-11", site_name: "B現場 型枠設置", start_time: "07:30", end_time: "17:00", hours_worked: 9.5, submitted_at: "2026-07-11T17:10:00Z" },
-  { id: "3", staff_name: "佐藤 健",   report_date: "2026-07-11", site_name: "C現場 左官作業", start_time: "08:00", end_time: "17:00", hours_worked: 9.0, submitted_at: "2026-07-11T17:02:00Z" },
-  { id: "4", staff_name: "鈴木 誠",   report_date: "2026-07-11", site_name: "D現場 基礎工事", start_time: "08:00", end_time: "17:00", hours_worked: 9.0, submitted_at: "2026-07-11T17:08:00Z" },
-  { id: "5", staff_name: "田中 太郎", report_date: "2026-07-10", site_name: "A現場 配筋検査", start_time: "08:00", end_time: "16:30", hours_worked: 8.5, submitted_at: "2026-07-10T16:35:00Z" },
-  { id: "6", staff_name: "山田 次郎", report_date: "2026-07-10", site_name: "B現場 型枠設置", start_time: "07:30", end_time: "17:30", hours_worked: 10.0, submitted_at: "2026-07-10T17:35:00Z" },
-  { id: "7", staff_name: "高橋 浩",   report_date: "2026-07-10", site_name: "E現場 内装工事", start_time: "09:00", end_time: "18:00", hours_worked: 9.0, submitted_at: "2026-07-10T18:05:00Z" },
-  { id: "8", staff_name: "田中 太郎", report_date: "2026-07-09", site_name: "A現場 鉄筋組み立て", start_time: "08:00", end_time: "17:00", hours_worked: 9.0, submitted_at: "2026-07-09T17:05:00Z" },
-  { id: "9", staff_name: "佐藤 健",   report_date: "2026-07-09", site_name: "C現場 左官作業", start_time: "08:30", end_time: "17:30", hours_worked: 9.0, submitted_at: "2026-07-09T17:35:00Z" },
-  { id: "10", staff_name: "鈴木 誠",  report_date: "2026-07-09", site_name: "F現場 外壁工事", start_time: "08:00", end_time: "16:00", hours_worked: 8.0, submitted_at: "2026-07-09T16:05:00Z" },
-  { id: "11", staff_name: "山田 次郎", report_date: "2026-07-08", site_name: "B現場 型枠解体", start_time: "07:30", end_time: "16:30", hours_worked: 9.0, submitted_at: "2026-07-08T16:35:00Z" },
-  { id: "12", staff_name: "高橋 浩",  report_date: "2026-07-08", site_name: "E現場 内装工事", start_time: "09:00", end_time: "17:00", hours_worked: 8.0, submitted_at: "2026-07-08T17:05:00Z" },
-  { id: "13", staff_name: "田中 太郎", report_date: "2026-07-07", site_name: "A現場 コンクリート打設", start_time: "07:00", end_time: "17:00", hours_worked: 10.0, submitted_at: "2026-07-07T17:05:00Z" },
-  { id: "14", staff_name: "佐藤 健",  report_date: "2026-07-07", site_name: "C現場 仕上げ", start_time: "08:00", end_time: "17:00", hours_worked: 9.0, submitted_at: "2026-07-07T17:02:00Z" },
-  { id: "15", staff_name: "鈴木 誠",  report_date: "2026-07-07", site_name: "D現場 基礎工事", start_time: "08:00", end_time: "17:00", hours_worked: 9.0, submitted_at: "2026-07-07T17:08:00Z" },
+  { id: "1", staff_name: "田中 太郎", report_date: "2026-07-11", site_name: "プロジェクトA 顧客対応", start_time: "09:00", end_time: "18:00", hours_worked: 9.0, submitted_at: "2026-07-11T18:05:00Z" },
+  { id: "2", staff_name: "山田 次郎", report_date: "2026-07-11", site_name: "プロジェクトB 打ち合わせ", start_time: "09:00", end_time: "18:30", hours_worked: 9.5, submitted_at: "2026-07-11T18:35:00Z" },
+  { id: "3", staff_name: "佐藤 健",   report_date: "2026-07-11", site_name: "プロジェクトC 資料作成", start_time: "09:00", end_time: "18:00", hours_worked: 9.0, submitted_at: "2026-07-11T18:02:00Z" },
+  { id: "4", staff_name: "鈴木 誠",   report_date: "2026-07-11", site_name: "プロジェクトD 定例業務", start_time: "09:00", end_time: "18:00", hours_worked: 9.0, submitted_at: "2026-07-11T18:08:00Z" },
+  { id: "5", staff_name: "田中 太郎", report_date: "2026-07-10", site_name: "プロジェクトA レビュー対応", start_time: "09:00", end_time: "17:30", hours_worked: 8.5, submitted_at: "2026-07-10T17:35:00Z" },
+  { id: "6", staff_name: "山田 次郎", report_date: "2026-07-10", site_name: "プロジェクトB 資料作成", start_time: "09:00", end_time: "19:00", hours_worked: 10.0, submitted_at: "2026-07-10T19:05:00Z" },
+  { id: "7", staff_name: "高橋 浩",   report_date: "2026-07-10", site_name: "プロジェクトE 顧客訪問", start_time: "09:00", end_time: "18:00", hours_worked: 9.0, submitted_at: "2026-07-10T18:05:00Z" },
+  { id: "8", staff_name: "田中 太郎", report_date: "2026-07-09", site_name: "プロジェクトA 定例業務", start_time: "09:00", end_time: "18:00", hours_worked: 9.0, submitted_at: "2026-07-09T18:05:00Z" },
+  { id: "9", staff_name: "佐藤 健",   report_date: "2026-07-09", site_name: "プロジェクトC 打ち合わせ", start_time: "09:30", end_time: "18:30", hours_worked: 9.0, submitted_at: "2026-07-09T18:35:00Z" },
+  { id: "10", staff_name: "鈴木 誠",  report_date: "2026-07-09", site_name: "プロジェクトF 進捗確認", start_time: "09:00", end_time: "17:00", hours_worked: 8.0, submitted_at: "2026-07-09T17:05:00Z" },
+  { id: "11", staff_name: "山田 次郎", report_date: "2026-07-08", site_name: "プロジェクトB 提案書作成", start_time: "09:00", end_time: "18:00", hours_worked: 9.0, submitted_at: "2026-07-08T18:05:00Z" },
+  { id: "12", staff_name: "高橋 浩",  report_date: "2026-07-08", site_name: "プロジェクトE 資料整理", start_time: "09:00", end_time: "17:00", hours_worked: 8.0, submitted_at: "2026-07-08T17:05:00Z" },
+  { id: "13", staff_name: "田中 太郎", report_date: "2026-07-07", site_name: "プロジェクトA 新規対応", start_time: "08:00", end_time: "18:00", hours_worked: 10.0, submitted_at: "2026-07-07T18:05:00Z" },
+  { id: "14", staff_name: "佐藤 健",  report_date: "2026-07-07", site_name: "プロジェクトC 仕上げ対応", start_time: "09:00", end_time: "18:00", hours_worked: 9.0, submitted_at: "2026-07-07T18:02:00Z" },
+  { id: "15", staff_name: "鈴木 誠",  report_date: "2026-07-07", site_name: "プロジェクトD 定例業務", start_time: "09:00", end_time: "18:00", hours_worked: 9.0, submitted_at: "2026-07-07T18:08:00Z" },
 ];
 
 function formatDate(dateStr: string): string {
@@ -57,7 +57,7 @@ function buildSummary(rows: ReportRow[]): StaffSummary[] {
 }
 
 function downloadCSV(rows: ReportRow[], year: number, month: number) {
-  const header = ["日付", "スタッフ名", "現場名・業務内容", "出勤時刻", "退勤時刻", "勤務時間(h)"];
+  const header = ["日付", "スタッフ名", "業務内容", "出勤時刻", "退勤時刻", "勤務時間(h)"];
   const lines = rows
     .sort((a, b) => a.report_date.localeCompare(b.report_date) || a.staff_name.localeCompare(b.staff_name))
     .map((r) => [r.report_date, r.staff_name, r.site_name, r.start_time, r.end_time, r.hours_worked].join(","));
@@ -260,7 +260,7 @@ export default function AccountingPage() {
                     <tr className="bg-stone-50">
                       <th className="text-left px-5 py-3 text-xs font-semibold text-stone-500">日付</th>
                       <th className="text-left px-4 py-3 text-xs font-semibold text-stone-500">スタッフ名</th>
-                      <th className="text-left px-4 py-3 text-xs font-semibold text-stone-500">現場名・業務内容</th>
+                      <th className="text-left px-4 py-3 text-xs font-semibold text-stone-500">業務内容</th>
                       <th className="text-center px-4 py-3 text-xs font-semibold text-stone-500">出勤</th>
                       <th className="text-center px-4 py-3 text-xs font-semibold text-stone-500">退勤</th>
                       <th className="text-right px-5 py-3 text-xs font-semibold text-stone-500">勤務時間</th>

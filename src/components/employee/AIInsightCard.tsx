@@ -53,7 +53,7 @@ export function AIInsightCard({ userName = "あなた" }: Props) {
         <div className="mt-1 bg-[#fdf1ee] rounded-lg px-3 py-2.5 border border-[#f5c9be]">
           <p className="text-[11px] text-[#b85e48] leading-relaxed">
             <span className="font-bold">AIコメント：</span>
-            {userName.split(" ")[0]}さんの「丁寧な仕事ぶり」タグ獲得数は先月から継続増加中です。この強みをチーム内で共有する機会を設けることで、現場全体のスコア向上が期待できます。
+            {userName.split(" ")[0]}さんの「丁寧な対応」タグ獲得数は先月から継続増加中です。この強みをチーム内で共有する機会を設けることで、チーム全体のスコア向上が期待できます。
           </p>
         </div>
       </div>

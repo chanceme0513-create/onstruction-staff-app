@@ -61,27 +61,27 @@ const TOTAL_MEMBERS = 12;
 
 const DUMMY_REPORTS: DailyReport[] = [
   {
-    id: "d1", name: "田中 太郎", avatar: "👷", submittedAt: "08:30",
-    siteName: "A現場 鉄筋組み立て", startTime: "08:00", endTime: "17:00", hoursWorked: 9,
+    id: "d1", name: "田中 太郎", avatar: "🧑", submittedAt: "08:30",
+    siteName: "プロジェクトA 定例業務", startTime: "09:00", endTime: "18:00", hoursWorked: 9,
     answers: { health: 4, progress: 4, teamwork: 5, safety: 4, motivation: 4 }, avgScore: 4.2,
     thanksSentTo: "山田 次郎", thanksTag: "ナイス連携",
-    note: "資材の納品が遅れており、明日のA現場進捗に影響が出そうです。",
+    note: "取引先からの資料到着が遅れており、明日のプロジェクトA進捗に影響が出そうです。",
   },
   {
-    id: "d2", name: "山田 次郎", avatar: "👷", submittedAt: "08:15",
-    siteName: "B現場 型枠設置", startTime: "07:30", endTime: "17:00", hoursWorked: 9.5,
+    id: "d2", name: "山田 次郎", avatar: "🧑", submittedAt: "08:15",
+    siteName: "プロジェクトB 顧客対応", startTime: "09:00", endTime: "18:30", hoursWorked: 9.5,
     answers: { health: 5, progress: 5, teamwork: 5, safety: 5, motivation: 5 }, avgScore: 5.0,
     thanksSentTo: "鈴木 誠", thanksTag: "助かりました",
   },
   {
-    id: "d3", name: "佐藤 健", avatar: "👷", submittedAt: "07:45",
-    siteName: "C現場 左官作業", startTime: "08:00", endTime: "17:00", hoursWorked: 9,
+    id: "d3", name: "佐藤 健", avatar: "🧑", submittedAt: "07:45",
+    siteName: "プロジェクトC 資料作成", startTime: "09:00", endTime: "18:00", hoursWorked: 9,
     answers: { health: 2, progress: 2, teamwork: 3, safety: 2, motivation: 3 }, avgScore: 2.4,
-    note: "疲れが溜まっています。高所作業が続いており、体調面で不安があります。",
+    note: "疲れが溜まっています。締め切り前の業務が続いており、体調面で不安があります。",
   },
   {
-    id: "d4", name: "鈴木 誠", avatar: "👷", submittedAt: "08:00",
-    siteName: "D現場 基礎工事", startTime: "08:00", endTime: "17:00", hoursWorked: 9,
+    id: "d4", name: "鈴木 誠", avatar: "🧑", submittedAt: "08:00",
+    siteName: "プロジェクトD 打ち合わせ", startTime: "09:00", endTime: "18:00", hoursWorked: 9,
     answers: { health: 4, progress: 4, teamwork: 3, safety: 4, motivation: 4 }, avgScore: 3.8,
   },
 ];
@@ -210,20 +210,20 @@ const AI_RECOMMENDATIONS: AiRecommendation[] = [
   {
     priority: "high",
     title: "佐藤 健 への即時フォローが必要",
-    reason: "体調スコア2・安全スコア2と、両方が危険水準です。本人から「疲れが溜まっている・高所作業が続いている」との申し送りもあり、翌日の現場投入には慎重な判断が求められます。",
-    action: "本日中に電話または直接声がけを行い、状態を確認してください。明日は高所・重機作業を避け、軽作業か休養を検討することを推奨します。",
+    reason: "体調スコア2・意欲スコア2と、両方が低水準です。本人から「疲れが溜まっている・締め切り業務が続いている」との申し送りもあり、翌日の業務アサインには慎重な判断が求められます。",
+    action: "本日中に声がけを行い、状態を確認してください。明日は負荷の高い業務を避け、サポート役や軽めのタスクへの振り替えを検討することを推奨します。",
   },
   {
     priority: "medium",
-    title: "資材遅延によるA現場スケジュールリスク",
-    reason: "田中 太郎の申し送りに「資材納品遅延で明日のA現場作業に影響が出る可能性」が報告されています。鉄筋工事の進捗に波及するリスクがあります。",
-    action: "今夜中に資材業者へ連絡し、遅延の程度を確認してください。最悪の場合に備え、別作業への振り替え指示を準備しておくことを推奨します。",
+    title: "取引先資料遅延によるプロジェクトAスケジュールリスク",
+    reason: "田中 太郎の申し送りに「取引先資料の到着が遅れており明日の業務に影響が出る可能性」が報告されています。プロジェクト全体の進捗に波及するリスクがあります。",
+    action: "取引先へ状況確認の連絡を入れてください。最悪の場合に備え、優先タスクの見直しや作業順の変更指示を準備しておくことを推奨します。",
   },
   {
     priority: "low",
-    title: "チーム全体の安全意識を底上げするタイミング",
-    reason: "提出済み4名中3名の安全スコアが4以下（田中4・佐藤2・鈴木4）。個別の問題ではなく、チーム全体の安全意識が低下傾向にある可能性があります。",
-    action: "今週の朝礼で安全確認を1項目追加することを推奨します。ヒヤリハット事例の共有や、熱中症・高所作業の再確認が効果的です。",
+    title: "チームエンゲージメント向上のタイミング",
+    reason: "提出済み4名中3名のモチベーションスコアが4以下（田中4・佐藤2・鈴木4）。個別の問題ではなく、チーム全体のモチベーションが低下傾向にある可能性があります。",
+    action: "今週のミーティングで良い取り組みへの感謝を伝える機会を設けることを推奨します。小さな成功体験の共有がエンゲージメント向上に効果的です。",
   },
 ];
 
@@ -327,7 +327,7 @@ export default function ManagerPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
               </svg>
             </div>
-            <span className="text-sm font-bold text-stone-800 tracking-tight">STAPO 建築</span>
+            <span className="text-sm font-bold text-stone-800 tracking-tight">STAPO</span>
             <span className="text-xs text-stone-400 ml-0.5">管理者</span>
           </div>
           <span className="text-xs text-stone-400">2026年7月11日</span>

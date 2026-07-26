@@ -18,7 +18,7 @@ type Props = {
 const TEAM_SCORE = 4.8;
 
 const TEAM_KEYWORDS = [
-  { label: "安全意識が高い", count: 32 },
+  { label: "丁寧な対応", count: 32 },
   { label: "頼りになる", count: 24 },
 ];
 
@@ -26,8 +26,8 @@ const VOICES: Voice[] = [
   {
     id: "2",
     type: "team",
-    text: "足場の設置、フォローのタイミングが完璧で本当に助かりました！",
-    tags: ["安全意識が高い"],
+    text: "急なお客様対応のフォロー、本当に助かりました！いつも頼りにしています。",
+    tags: ["丁寧な対応"],
     timeAgo: "4時間前",
     from: "山田 次郎",
   },
@@ -41,7 +41,7 @@ const VOICES: Voice[] = [
   },
 ];
 
-export function EmployeePortfolio({ userName = "田中 太郎", userRole = "施工スタッフ" }: Props) {
+export function EmployeePortfolio({ userName = "田中 太郎", userRole = "スタッフ" }: Props) {
   const initials = userName.replace(/\s/g, "").slice(0, 2);
 
   return (

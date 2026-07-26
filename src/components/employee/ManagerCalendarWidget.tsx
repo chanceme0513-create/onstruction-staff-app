@@ -11,14 +11,14 @@ type Schedule = {
 };
 
 const DUMMY_SCHEDULES: Schedule[] = [
-  { id: "1", date: "2026-07-11", time: "09:00", title: "A現場 立会い検査", location: "中央区3丁目" },
-  { id: "2", date: "2026-07-11", time: "14:00", title: "B現場 打ち合わせ", location: "西区12丁目" },
-  { id: "3", date: "2026-07-14", time: "10:00", title: "資材発注" },
-  { id: "4", date: "2026-07-14", time: "15:00", title: "B現場 進捗確認", location: "東区5丁目" },
-  { id: "5", date: "2026-07-16", time: "終日", title: "安全パトロール", location: "各現場" },
-  { id: "6", date: "2026-07-18", time: "13:00", title: "安全会議", location: "本社" },
-  { id: "7", date: "2026-07-22", time: "10:00", title: "C現場 着工", location: "南区8丁目" },
-  { id: "8", date: "2026-07-25", time: "09:00", title: "竣工検査", location: "北区2丁目" },
+  { id: "1", date: "2026-07-11", time: "09:00", title: "プロジェクトA 定例MTG", location: "第1会議室" },
+  { id: "2", date: "2026-07-11", time: "14:00", title: "取引先 打ち合わせ", location: "オンライン" },
+  { id: "3", date: "2026-07-14", time: "10:00", title: "月次レポート提出" },
+  { id: "4", date: "2026-07-14", time: "15:00", title: "プロジェクトB 進捗確認", location: "第2会議室" },
+  { id: "5", date: "2026-07-16", time: "終日", title: "社内研修", location: "研修室" },
+  { id: "6", date: "2026-07-18", time: "13:00", title: "マネージャー会議", location: "本社" },
+  { id: "7", date: "2026-07-22", time: "10:00", title: "新規プロジェクト キックオフ", location: "第1会議室" },
+  { id: "8", date: "2026-07-25", time: "09:00", title: "月末振り返り", location: "オンライン" },
 ];
 
 const WEEK_DAYS = ["日", "月", "火", "水", "木", "金", "土"];
