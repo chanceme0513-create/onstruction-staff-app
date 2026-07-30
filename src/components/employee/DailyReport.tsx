@@ -122,12 +122,12 @@ export function DailyReport({ currentUser }: Props) {
           </p>
           <div className="flex flex-col gap-3">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">業務内容</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">現場名</label>
               <input
                 type="text"
                 value={siteName}
                 onChange={(e) => setSiteName(e.target.value)}
-                placeholder="例：クライアント提案 / 資料作成 / ミーティング"
+                placeholder="例：〇〇ビル新築工事 / △△マンション改修"
                 className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300"
               />
             </div>
@@ -279,7 +279,7 @@ export function DailyReport({ currentUser }: Props) {
           </button>
           {!canSubmit && (
             <p className="text-xs text-gray-400 text-center">
-              業務内容・勤務時間・コンディション確認をすべて入力してください
+              現場名・勤務時間・コンディション確認をすべて入力してください
             </p>
           )}
         </div>
