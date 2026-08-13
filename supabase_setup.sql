@@ -1,6 +1,6 @@
 -- Supabase SQL Editor にそのまま貼り付けて実行してください
 
--- 日報テーブル
+-- ===== 日報テーブル =====
 CREATE TABLE IF NOT EXISTS daily_reports (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   staff_id text NOT NULL,
@@ -18,11 +18,14 @@ CREATE TABLE IF NOT EXISTS daily_reports (
   avg_score numeric NOT NULL,
   thanks_sent_to text,
   thanks_tag text,
+  thanks_message text,
   note text,
   report_date date DEFAULT current_date
 );
 
--- 誰でも読み書きできるようにする（デモ用・認証なし）
+-- thanks_message カラムが未追加の場合は追加（既存DBへの追加）
+ALTER TABLE daily_reports ADD COLUMN IF NOT EXISTS thanks_message text;
+
 ALTER TABLE daily_reports ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "誰でも閲覧できる" ON daily_reports
@@ -30,3 +33,34 @@ CREATE POLICY "誰でも閲覧できる" ON daily_reports
 
 CREATE POLICY "誰でも投稿できる" ON daily_reports
   FOR INSERT WITH CHECK (true);
+
+-- 日報の編集を許可（修正機能のために必要）
+CREATE POLICY "誰でも更新できる" ON daily_reports
+  FOR UPDATE USING (true);
+
+
+-- ===== チームスケジュールテーブル =====
+CREATE TABLE IF NOT EXISTS schedules (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  staff_id text NOT NULL,
+  staff_name text NOT NULL,
+  schedule_date date NOT NULL,
+  time text NOT NULL DEFAULT '終日',
+  title text NOT NULL,
+  location text,
+  created_at timestamptz DEFAULT now()
+);
+
+ALTER TABLE schedules ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "誰でも閲覧できる" ON schedules
+  FOR SELECT USING (true);
+
+CREATE POLICY "誰でも投稿できる" ON schedules
+  FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "誰でも更新できる" ON schedules
+  FOR UPDATE USING (true);
+
+CREATE POLICY "誰でも削除できる" ON schedules
+  FOR DELETE USING (true);

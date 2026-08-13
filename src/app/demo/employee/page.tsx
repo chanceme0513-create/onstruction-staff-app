@@ -97,8 +97,8 @@ export default function DemoEmployeePage() {
             {/* チームの雰囲気 */}
             <TeamMood avgScore={3.9} totalMembers={12} checkedIn={4} />
 
-            {/* リーダーの予定 */}
-            <ManagerCalendarWidget />
+            {/* チームカレンダー */}
+            <ManagerCalendarWidget currentUser={currentUser} />
           </div>
         )}
 
