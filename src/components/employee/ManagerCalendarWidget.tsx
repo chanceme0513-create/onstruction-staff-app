@@ -46,7 +46,8 @@ export function ManagerCalendarWidget({ currentUser }: Props) {
   const [showAddForm, setShowAddForm] = useState(false);
 
   // 予定追加フォームstate
-  const [newTime, setNewTime] = useState("");
+  const [newStartTime, setNewStartTime] = useState("");
+  const [newEndTime, setNewEndTime] = useState("");
   const [newTitle, setNewTitle] = useState("");
   const [newLocation, setNewLocation] = useState("");
   const [saving, setSaving] = useState(false);
@@ -72,17 +73,22 @@ export function ManagerCalendarWidget({ currentUser }: Props) {
   async function handleAddSchedule() {
     if (!selectedDate || !newTitle.trim()) return;
     setSaving(true);
+    const timeValue = newStartTime && newEndTime
+      ? `${newStartTime} - ${newEndTime}`
+      : newStartTime
+      ? newStartTime
+      : "終日";
     const { error } = await supabase.from("schedules").insert({
       staff_id: currentUser.id,
       staff_name: currentUser.name,
       schedule_date: toDateStr(selectedDate),
-      time: newTime.trim() || "終日",
+      time: timeValue,
       title: newTitle.trim(),
       location: newLocation.trim() || null,
     });
     setSaving(false);
     if (error) { alert("保存に失敗しました"); return; }
-    setNewTime(""); setNewTitle(""); setNewLocation("");
+    setNewStartTime(""); setNewEndTime(""); setNewTitle(""); setNewLocation("");
     setShowAddForm(false);
     await fetchSchedules();
   }
@@ -236,15 +242,25 @@ export function ManagerCalendarWidget({ currentUser }: Props) {
 
                 <div>
                   <label className="block text-xs font-medium text-stone-500 mb-1">
-                    開始時刻
+                    時刻
                     <span className="text-stone-400 font-normal ml-1">（任意・未入力で「終日」になります）</span>
                   </label>
-                  <input
-                    type="time"
-                    value={newTime}
-                    onChange={(e) => setNewTime(e.target.value)}
-                    className="w-full border border-stone-200 rounded-lg px-3 py-2.5 text-base text-stone-700 focus:outline-none focus:ring-2 focus:ring-orange-200"
-                  />
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="time"
+                      value={newStartTime}
+                      onChange={(e) => setNewStartTime(e.target.value)}
+                      className="flex-1 border border-stone-200 rounded-lg px-3 py-2.5 text-base text-stone-700 focus:outline-none focus:ring-2 focus:ring-orange-200"
+                    />
+                    <span className="text-stone-400 text-sm shrink-0">〜</span>
+                    <input
+                      type="time"
+                      value={newEndTime}
+                      onChange={(e) => setNewEndTime(e.target.value)}
+                      className="flex-1 border border-stone-200 rounded-lg px-3 py-2.5 text-base text-stone-700 focus:outline-none focus:ring-2 focus:ring-orange-200"
+                    />
+                  </div>
+                  <p className="text-[10px] text-stone-400 mt-1">開始のみ入力も可。両方未入力で「終日」になります</p>
                 </div>
 
                 <div>
