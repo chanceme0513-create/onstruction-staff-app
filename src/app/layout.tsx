@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import SwRegister from "./sw-register";
 
 export const metadata: Metadata = {
   title: "STAPO",
@@ -37,6 +38,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         {children}
+        <SwRegister />
       </body>
     </html>
   );
