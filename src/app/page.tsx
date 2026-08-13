@@ -26,12 +26,6 @@ export default function Home() {
         >
           マネージャー画面
         </Link>
-        <Link
-          href="/demo/customer"
-          className="block text-center bg-white border border-stone-200 text-stone-600 py-2.5 px-6 rounded-xl font-medium hover:bg-stone-50 transition-colors text-sm"
-        >
-          顧客評価画面
-        </Link>
       </div>
     </main>
   );
