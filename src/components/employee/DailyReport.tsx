@@ -7,11 +7,11 @@ import { StaffUser, STAFF_LIST } from "./UserSelectScreen";
 type Answer = 1 | 2 | 3 | 4 | 5;
 
 const CONDITION_QUESTIONS = [
-  { id: 1, key: "score_health", text: "本日の体調はいかがでしたか？" },
-  { id: 2, key: "score_progress", text: "作業の進捗は順調でしたか？" },
-  { id: 3, key: "score_teamwork", text: "チーム内の連携は取れていましたか？" },
-  { id: 4, key: "score_safety", text: "職場環境で気になることはありましたか？（5＝問題なし）" },
-  { id: 5, key: "score_motivation", text: "明日への意欲はいかがですか？" },
+  { id: 1, key: "score_health", text: "今日の体調はいかがですか？" },
+  { id: 2, key: "score_progress", text: "今日の作業はスムーズに進みそうですか？" },
+  { id: 3, key: "score_teamwork", text: "チームの連携に気になることはありますか？（5＝問題なし）" },
+  { id: 4, key: "score_safety", text: "今日の現場で安全上の懸念はありますか？（5＝問題なし）" },
+  { id: 5, key: "score_motivation", text: "今日の仕事への意欲はいかがですか？" },
 ];
 
 const THANKS_TAGS = ["助かりました", "ありがとう", "お疲れ様でした", "よく頑張りました"];
@@ -224,7 +224,7 @@ export function DailyReport({ currentUser }: Props) {
           </button>
           <div>
             <h2 className="text-sm font-bold text-white">{formTitle}</h2>
-            <p className="text-xs text-gray-300 mt-0.5">業務終了後にご記入ください</p>
+            <p className="text-xs text-gray-300 mt-0.5">出勤前にご記入ください</p>
           </div>
         </div>
 
@@ -232,25 +232,23 @@ export function DailyReport({ currentUser }: Props) {
 
           {/* 業務情報 */}
           <div>
-            <p className="text-xs font-semibold text-gray-400 tracking-wider uppercase mb-3">業務情報（必須）</p>
-            <div className="flex flex-col gap-3">
+            <p className="text-xs font-semibold text-gray-400 tracking-wider uppercase mb-3">本日の作業予定（必須）</p>
+            <div className="flex flex-col gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">現場名</label>
                 <input type="text" value={siteName} onChange={(e) => setSiteName(e.target.value)}
                   placeholder="例：〇〇ビル新築工事 / △△マンション改修"
-                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300" />
+                  className="w-full border border-gray-200 rounded-xl px-3 py-3 text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300" />
               </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">出勤時刻</label>
-                  <input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)}
-                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">退勤時刻</label>
-                  <input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)}
-                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300" />
-                </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">出勤予定時刻</label>
+                <input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)}
+                  className="w-full border border-gray-200 rounded-xl px-3 py-3 text-base text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">退勤予定時刻</label>
+                <input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)}
+                  className="w-full border border-gray-200 rounded-xl px-3 py-3 text-base text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300" />
               </div>
             </div>
           </div>
@@ -289,8 +287,8 @@ export function DailyReport({ currentUser }: Props) {
 
           {/* 感謝 */}
           <div>
-            <p className="text-xs font-semibold text-gray-400 tracking-wider uppercase mb-1">感謝を送る（任意）</p>
-            <p className="text-xs text-gray-400 mb-3">今日お世話になった方へ一言</p>
+            <p className="text-xs font-semibold text-gray-400 tracking-wider uppercase mb-1">昨日の感謝を送る（任意）</p>
+            <p className="text-xs text-gray-400 mb-3">昨日お世話になった方へ一言</p>
             <div className="flex flex-col gap-3">
               <div className="flex flex-wrap gap-2">
                 {teamMembers.map((member) => (
@@ -373,7 +371,7 @@ export function DailyReport({ currentUser }: Props) {
       <section className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
         <div className="bg-gray-700 px-5 py-4 flex items-center justify-between">
           <div>
-            <h2 className="text-sm font-bold text-white">本日の業務報告</h2>
+            <h2 className="text-sm font-bold text-white">本日の出勤報告</h2>
             <p className="text-xs text-gray-300 mt-0.5">{today()}</p>
           </div>
           {todayReport ? (
@@ -420,7 +418,7 @@ export function DailyReport({ currentUser }: Props) {
             </div>
           ) : (
             <div className="flex flex-col items-center gap-3 py-2">
-              <p className="text-sm text-gray-500">まだ本日の業務報告が提出されていません</p>
+              <p className="text-sm text-gray-500">まだ本日の出勤報告が提出されていません</p>
               <button
                 onClick={openNewForm}
                 className="w-full py-3 rounded-xl text-sm font-bold bg-[#e8836e] hover:bg-[#d4705c] text-white transition-colors"

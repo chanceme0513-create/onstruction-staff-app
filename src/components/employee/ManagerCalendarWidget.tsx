@@ -216,41 +216,62 @@ export function ManagerCalendarWidget({ currentUser }: Props) {
 
             {/* 追加フォーム */}
             {showAddForm && (
-              <div className="mb-3 bg-[#fdf8f5] border border-stone-100 rounded-xl p-3 flex flex-col gap-2">
-                <p className="text-xs font-semibold text-stone-500">{currentUser.name} の予定を追加</p>
-                <input
-                  type="text"
-                  value={newTitle}
-                  onChange={(e) => setNewTitle(e.target.value)}
-                  placeholder="予定のタイトル（例：A現場 作業）"
-                  className="w-full border border-stone-200 rounded-lg px-3 py-2 text-sm text-stone-700 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-orange-200"
-                />
-                <div className="grid grid-cols-2 gap-2">
+              <div className="mb-3 bg-[#fdf8f5] border border-stone-200 rounded-xl p-4 flex flex-col gap-3">
+                <p className="text-xs font-bold text-stone-600">
+                  {currentUser.name} の予定を追加
+                </p>
+
+                <div>
+                  <label className="block text-xs font-medium text-stone-500 mb-1">
+                    予定の内容 <span className="text-red-400">*必須</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={newTitle}
+                    onChange={(e) => setNewTitle(e.target.value)}
+                    placeholder="例：A現場 作業、資材発注、安全会議"
+                    className="w-full border border-stone-200 rounded-lg px-3 py-2.5 text-sm text-stone-700 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-orange-200"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-medium text-stone-500 mb-1">
+                    開始時刻
+                    <span className="text-stone-400 font-normal ml-1">（任意・未入力で「終日」になります）</span>
+                  </label>
                   <input
                     type="time"
                     value={newTime}
                     onChange={(e) => setNewTime(e.target.value)}
-                    className="border border-stone-200 rounded-lg px-3 py-2 text-sm text-stone-700 focus:outline-none focus:ring-2 focus:ring-orange-200"
+                    className="w-full border border-stone-200 rounded-lg px-3 py-2.5 text-base text-stone-700 focus:outline-none focus:ring-2 focus:ring-orange-200"
                   />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-medium text-stone-500 mb-1">
+                    場所・現場名
+                    <span className="text-stone-400 font-normal ml-1">（任意）</span>
+                  </label>
                   <input
                     type="text"
                     value={newLocation}
                     onChange={(e) => setNewLocation(e.target.value)}
-                    placeholder="場所（任意）"
-                    className="border border-stone-200 rounded-lg px-3 py-2 text-sm text-stone-700 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-orange-200"
+                    placeholder="例：中央区3丁目、本社"
+                    className="w-full border border-stone-200 rounded-lg px-3 py-2.5 text-sm text-stone-700 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-orange-200"
                   />
                 </div>
-                <div className="flex gap-2">
+
+                <div className="flex gap-2 pt-1">
                   <button
                     onClick={() => setShowAddForm(false)}
-                    className="flex-1 py-2 rounded-lg text-xs font-medium border border-stone-200 text-stone-500 hover:bg-stone-50"
+                    className="flex-1 py-2.5 rounded-lg text-sm font-medium border border-stone-200 text-stone-500 hover:bg-stone-50"
                   >
                     キャンセル
                   </button>
                   <button
                     onClick={handleAddSchedule}
                     disabled={!newTitle.trim() || saving}
-                    className={`flex-1 py-2 rounded-lg text-xs font-bold transition-colors ${
+                    className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-colors ${
                       newTitle.trim() && !saving ? "bg-[#e8836e] text-white hover:bg-[#d4705c]" : "bg-stone-100 text-stone-400"
                     }`}
                   >
