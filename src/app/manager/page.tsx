@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { NoticeboardScreen } from "@/components/employee/NoticeboardScreen";
 import { AttendanceView } from "@/components/manager/AttendanceView";
+import { ManagerCalendarView } from "@/components/manager/ManagerCalendarView";
 import { supabase, DailyReportRow } from "@/lib/supabase";
 import { getAuthUser, clearAuthUser } from "@/lib/auth";
 
@@ -940,6 +941,11 @@ export default function ManagerPage() {
             )}
 
             <AiAnalysisSection reports={reports} />
+
+            <div>
+              <p className="text-sm font-bold text-stone-700 mb-3 px-1">チームカレンダー</p>
+              <ManagerCalendarView />
+            </div>
 
             {hasNotes > 0 && (
               <div className="bg-yellow-50 border border-yellow-200 rounded-2xl px-4 py-3 flex items-center gap-3">
