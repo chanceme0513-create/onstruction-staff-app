@@ -566,6 +566,59 @@ function DailyBarChart({ data }: { data: DailyStats[] }) {
   );
 }
 
+async function downloadDailyReportsCSV(year: number, month: number) {
+  const first = `${year}-${String(month).padStart(2, "0")}-01`;
+  const lastDay = new Date(year, month, 0).getDate();
+  const last = `${year}-${String(month).padStart(2, "0")}-${String(lastDay).padStart(2, "0")}`;
+
+  const { data } = await supabase
+    .from("daily_reports")
+    .select("*")
+    .gte("report_date", first)
+    .lte("report_date", last)
+    .order("report_date", { ascending: true })
+    .order("staff_name", { ascending: true });
+
+  if (!data || data.length === 0) {
+    alert("指定した月の日報データがありません");
+    return;
+  }
+
+  const header = [
+    "日付", "スタッフ名", "現場名・業務内容",
+    "出勤時刻", "退勤時刻", "勤務時間(h)",
+    "体調", "進捗", "連携", "安全", "意欲", "平均スコア",
+    "感謝送り先", "感謝タグ", "申し送り",
+  ];
+
+  const escape = (v: string | number | null) => {
+    if (v === null || v === undefined) return "";
+    const s = String(v);
+    return s.includes(",") || s.includes("\n") || s.includes('"')
+      ? `"${s.replace(/"/g, '""')}"`
+      : s;
+  };
+
+  const lines = (data as DailyReportRow[]).map((r) =>
+    [
+      r.report_date, r.staff_name, r.site_name,
+      r.start_time, r.end_time, r.hours_worked,
+      r.score_health, r.score_progress, r.score_teamwork, r.score_safety, r.score_motivation, r.avg_score,
+      r.thanks_sent_to, r.thanks_tag, r.note,
+    ].map(escape).join(",")
+  );
+
+  const bom = "﻿";
+  const csv = bom + [header.join(","), ...lines].join("\n");
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `日報_${year}年${month}月.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 function AnalyticsTab({
   historyData,
   staffStats,
@@ -576,6 +629,10 @@ function AnalyticsTab({
   dimAvgs: DimAvg[];
 }) {
   const [period, setPeriod] = useState<"month" | "qual">("month");
+  const now = new Date();
+  const [exportYear, setExportYear] = useState(now.getFullYear());
+  const [exportMonth, setExportMonth] = useState(now.getMonth() + 1);
+  const [exporting, setExporting] = useState(false);
   const EXPECTED_DAILY = TOTAL_MEMBERS;
   const last30 = historyData.slice(-30);
   const totalSubmissions = last30.reduce((s, d) => s + d.count, 0);
@@ -720,6 +777,49 @@ function AnalyticsTab({
             </div>
           </section>
         )}
+
+        <section className="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+          <div className="px-5 py-4 border-b border-stone-100">
+            <h2 className="text-sm font-bold text-stone-800">日報データをエクスポート</h2>
+            <p className="text-xs text-stone-400 mt-0.5">コンディションスコア・申し送りを含む全データをCSVで出力します</p>
+          </div>
+          <div className="p-5 flex flex-col gap-4">
+            <div className="flex items-center gap-3">
+              <select
+                value={exportYear}
+                onChange={(e) => setExportYear(Number(e.target.value))}
+                className="border border-stone-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#e8836e]/30"
+              >
+                {[now.getFullYear() - 1, now.getFullYear()].map(y => (
+                  <option key={y} value={y}>{y}年</option>
+                ))}
+              </select>
+              <select
+                value={exportMonth}
+                onChange={(e) => setExportMonth(Number(e.target.value))}
+                className="border border-stone-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#e8836e]/30"
+              >
+                {Array.from({ length: 12 }, (_, i) => i + 1).map(m => (
+                  <option key={m} value={m}>{m}月</option>
+                ))}
+              </select>
+            </div>
+            <button
+              onClick={async () => {
+                setExporting(true);
+                await downloadDailyReportsCSV(exportYear, exportMonth);
+                setExporting(false);
+              }}
+              disabled={exporting}
+              className="flex items-center justify-center gap-2 w-full border border-stone-200 rounded-xl py-3 text-sm font-semibold text-stone-600 hover:bg-stone-50 transition-colors disabled:opacity-50"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              {exporting ? "準備中..." : `${exportYear}年${exportMonth}月の日報をCSVでダウンロード`}
+            </button>
+          </div>
+        </section>
       </>}
     </div>
   );
