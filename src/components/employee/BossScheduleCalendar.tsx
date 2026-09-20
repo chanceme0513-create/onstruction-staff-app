@@ -15,27 +15,27 @@ const DUMMY_SCHEDULES: Schedule[] = [
     id: "1",
     date: "2026-06-03",
     time: "09:00",
-    title: "A現場 立会い検査",
+    title: "プロジェクトA 確認MTG",
     location: "中央区3丁目",
   },
   {
     id: "2",
     date: "2026-06-03",
     time: "14:00",
-    title: "B現場 打ち合わせ",
+    title: "プロジェクトB 定例会議",
     location: "西区12丁目",
   },
   {
     id: "3",
     date: "2026-06-04",
     time: "10:00",
-    title: "資材発注",
+    title: "備品発注",
   },
   {
     id: "4",
     date: "2026-06-04",
     time: "15:00",
-    title: "C現場 進捗確認",
+    title: "プロジェクトC 進捗確認",
     location: "東区5丁目",
   },
   {
@@ -48,14 +48,14 @@ const DUMMY_SCHEDULES: Schedule[] = [
     id: "6",
     date: "2026-06-06",
     time: "13:00",
-    title: "安全会議",
+    title: "全体ミーティング",
     location: "本社",
   },
   {
     id: "7",
     date: "2026-06-09",
     time: "10:00",
-    title: "D現場 着工",
+    title: "プロジェクトD キックオフ",
     location: "南区8丁目",
   },
 ];
@@ -90,7 +90,7 @@ export function BossScheduleCalendar() {
   return (
     <section className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-sm font-semibold text-gray-700">📅 リーダーの予定</h2>
+        <h2 className="text-sm font-semibold text-gray-700">📅 マネージャーの予定</h2>
         <span className="text-sm text-gray-600 font-medium">
           {year}年{month + 1}月
         </span>

@@ -61,27 +61,27 @@ const TOTAL_MEMBERS = 12;
 
 const DUMMY_REPORTS: DailyReport[] = [
   {
-    id: "d1", name: "田中 太郎", avatar: "👷", submittedAt: "08:30",
-    siteName: "A現場 鉄筋組み立て", startTime: "08:00", endTime: "17:00", hoursWorked: 9,
+    id: "d1", name: "田中 太郎", avatar: "🧑", submittedAt: "08:30",
+    siteName: "プロジェクトA 定例業務", startTime: "09:00", endTime: "18:00", hoursWorked: 9,
     answers: { health: 4, progress: 4, teamwork: 5, safety: 4, motivation: 4 }, avgScore: 4.2,
     thanksSentTo: "山田 次郎", thanksTag: "ナイス連携",
-    note: "資材の納品が遅れており、明日のA現場進捗に影響が出そうです。",
+    note: "取引先からの資料到着が遅れており、明日のプロジェクトA進捗に影響が出そうです。",
   },
   {
-    id: "d2", name: "山田 次郎", avatar: "👷", submittedAt: "08:15",
-    siteName: "B現場 型枠設置", startTime: "07:30", endTime: "17:00", hoursWorked: 9.5,
+    id: "d2", name: "山田 次郎", avatar: "🧑", submittedAt: "08:15",
+    siteName: "プロジェクトB 顧客対応", startTime: "09:00", endTime: "18:30", hoursWorked: 9.5,
     answers: { health: 5, progress: 5, teamwork: 5, safety: 5, motivation: 5 }, avgScore: 5.0,
     thanksSentTo: "鈴木 誠", thanksTag: "助かりました",
   },
   {
-    id: "d3", name: "佐藤 健", avatar: "👷", submittedAt: "07:45",
-    siteName: "C現場 左官作業", startTime: "08:00", endTime: "17:00", hoursWorked: 9,
+    id: "d3", name: "佐藤 健", avatar: "🧑", submittedAt: "07:45",
+    siteName: "プロジェクトC 資料作成", startTime: "09:00", endTime: "18:00", hoursWorked: 9,
     answers: { health: 2, progress: 2, teamwork: 3, safety: 2, motivation: 3 }, avgScore: 2.4,
-    note: "疲れが溜まっています。高所作業が続いており、体調面で不安があります。",
+    note: "疲れが溜まっています。締め切り前の業務が続いており、体調面で不安があります。",
   },
   {
-    id: "d4", name: "鈴木 誠", avatar: "👷", submittedAt: "08:00",
-    siteName: "D現場 基礎工事", startTime: "08:00", endTime: "17:00", hoursWorked: 9,
+    id: "d4", name: "鈴木 誠", avatar: "🧑", submittedAt: "08:00",
+    siteName: "プロジェクトD 打ち合わせ", startTime: "09:00", endTime: "18:00", hoursWorked: 9,
     answers: { health: 4, progress: 4, teamwork: 3, safety: 4, motivation: 4 }, avgScore: 3.8,
   },
 ];
@@ -93,6 +93,22 @@ const TEAM_DIMS = [
   { label: "安全", score: 3.8 },
   { label: "意欲", score: 4.0 },
 ];
+
+const CLIENT_EVAL = {
+  score: 4.6,
+  totalRatings: 28,
+  trendLabel: "↑ 先月+0.2",
+  keywords: [
+    { label: "説明が分かりやすい", count: 18 },
+    { label: "対応が速い", count: 15 },
+    { label: "また来たい", count: 12 },
+  ],
+  voices: [
+    { name: "匿名", text: "丁寧に説明していただき、とても安心できました。また担当してほしいです。", rating: 5, timeAgo: "2日前" },
+    { name: "匿名", text: "問い合わせへの返信が早く、スムーズに進みました。ありがとうございました。", rating: 5, timeAgo: "3日前" },
+    { name: "匿名", text: "とても丁寧な対応で満足しています。また利用したいと思います。", rating: 4, timeAgo: "4日前" },
+  ],
+};
 
 function ScoreBadge({ score }: { score: number }) {
   const color =
@@ -210,20 +226,20 @@ const AI_RECOMMENDATIONS: AiRecommendation[] = [
   {
     priority: "high",
     title: "佐藤 健 への即時フォローが必要",
-    reason: "体調スコア2・安全スコア2と、両方が危険水準です。本人から「疲れが溜まっている・高所作業が続いている」との申し送りもあり、翌日の現場投入には慎重な判断が求められます。",
-    action: "本日中に電話または直接声がけを行い、状態を確認してください。明日は高所・重機作業を避け、軽作業か休養を検討することを推奨します。",
+    reason: "体調スコア2・意欲スコア2と、両方が低水準です。本人から「疲れが溜まっている・締め切り業務が続いている」との申し送りもあり、翌日の業務アサインには慎重な判断が求められます。",
+    action: "本日中に声がけを行い、状態を確認してください。明日は負荷の高い業務を避け、サポート役や軽めのタスクへの振り替えを検討することを推奨します。",
   },
   {
     priority: "medium",
-    title: "資材遅延によるA現場スケジュールリスク",
-    reason: "田中 太郎の申し送りに「資材納品遅延で明日のA現場作業に影響が出る可能性」が報告されています。鉄筋工事の進捗に波及するリスクがあります。",
-    action: "今夜中に資材業者へ連絡し、遅延の程度を確認してください。最悪の場合に備え、別作業への振り替え指示を準備しておくことを推奨します。",
+    title: "取引先資料遅延によるプロジェクトAスケジュールリスク",
+    reason: "田中 太郎の申し送りに「取引先資料の到着が遅れており明日の業務に影響が出る可能性」が報告されています。プロジェクト全体の進捗に波及するリスクがあります。",
+    action: "取引先へ状況確認の連絡を入れてください。最悪の場合に備え、優先タスクの見直しや作業順の変更指示を準備しておくことを推奨します。",
   },
   {
     priority: "low",
-    title: "チーム全体の安全意識を底上げするタイミング",
-    reason: "提出済み4名中3名の安全スコアが4以下（田中4・佐藤2・鈴木4）。個別の問題ではなく、チーム全体の安全意識が低下傾向にある可能性があります。",
-    action: "今週の朝礼で安全確認を1項目追加することを推奨します。ヒヤリハット事例の共有や、熱中症・高所作業の再確認が効果的です。",
+    title: "チームエンゲージメント向上のタイミング",
+    reason: "提出済み4名中3名のモチベーションスコアが4以下（田中4・佐藤2・鈴木4）。個別の問題ではなく、チーム全体のモチベーションが低下傾向にある可能性があります。",
+    action: "今週のミーティングで良い取り組みへの感謝を伝える機会を設けることを推奨します。小さな成功体験の共有がエンゲージメント向上に効果的です。",
   },
 ];
 
@@ -1115,7 +1131,7 @@ export default function ManagerPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
               </svg>
             </div>
-            <span className="text-sm font-bold text-stone-800 tracking-tight">STAPO 建築</span>
+            <span className="text-sm font-bold text-stone-800 tracking-tight">STAPO</span>
             <span className="text-xs text-stone-400 ml-0.5">管理者</span>
           </div>
           <span className="text-xs text-stone-400">2026年7月11日</span>
@@ -1159,13 +1175,18 @@ export default function ManagerPage() {
                 <p className="text-sm font-bold text-stone-800">今日のチームサマリー</p>
                 <span className="text-[10px] text-stone-400">7月11日 リアルタイム</span>
               </div>
-              <div className="grid grid-cols-2 gap-0 divide-x divide-stone-100">
-                <div className="text-center pr-3">
+              <div className="grid grid-cols-3 gap-0 divide-x divide-stone-100">
+                <div className="text-center pr-2">
                   <p className="text-[10px] text-stone-400 mb-1">チームスコア</p>
                   <p className="text-2xl font-black text-sky-600">{avgScore.toFixed(1)}</p>
                   <p className="text-[10px] text-emerald-500 font-semibold mt-0.5">↑ 先週+0.3</p>
                 </div>
-                <div className="text-center pl-3">
+                <div className="text-center px-2">
+                  <p className="text-[10px] text-stone-400 mb-1">顧客満足度</p>
+                  <p className="text-2xl font-black text-orange-500">{CLIENT_EVAL.score}</p>
+                  <p className="text-[10px] text-emerald-500 font-semibold mt-0.5">{CLIENT_EVAL.trendLabel}</p>
+                </div>
+                <div className="text-center pl-2">
                   <p className="text-[10px] text-stone-400 mb-1">要注意</p>
                   <p className={`text-2xl font-black ${alertCount > 0 ? "text-red-500" : "text-stone-300"}`}>{alertCount}名</p>
                   <p className={`text-[10px] font-semibold mt-0.5 ${alertCount > 0 ? "text-red-400" : "text-stone-300"}`}>
@@ -1175,8 +1196,9 @@ export default function ManagerPage() {
               </div>
             </div>
 
-            {/* チーム状態 */}
-            <div>
+            {/* チーム状態 ＆ 顧客評価（横並び） */}
+            <div className="grid grid-cols-2 gap-3 items-start">
+              {/* チーム状態 */}
               <div className="bg-white rounded-2xl border border-stone-100 shadow-sm p-4">
                 <div className="flex items-center gap-1.5 mb-3">
                   <div className="w-2 h-2 rounded-full bg-sky-500 shrink-0" />
@@ -1204,6 +1226,32 @@ export default function ManagerPage() {
                 </div>
                 <p className="text-[10px] text-stone-300 mt-2.5">本日 {submittedCount}名提出</p>
               </div>
+
+              {/* 顧客評価 */}
+              <div className="bg-white rounded-2xl border border-stone-100 shadow-sm p-4">
+                <div className="flex items-center gap-1.5 mb-3">
+                  <div className="w-2 h-2 rounded-full bg-orange-400 shrink-0" />
+                  <p className="text-xs font-bold text-stone-700">顧客評価</p>
+                </div>
+                <div className="flex items-end gap-1 mb-1">
+                  <span className="text-3xl font-black text-orange-500 leading-none">{CLIENT_EVAL.score}</span>
+                  <span className="text-xs text-stone-400 pb-0.5">/5.0</span>
+                </div>
+                <div className="h-1.5 bg-orange-100 rounded-full mb-2">
+                  <div className="h-1.5 bg-orange-400 rounded-full" style={{ width: `${(CLIENT_EVAL.score / 5) * 100}%` }} />
+                </div>
+                <p className="text-[10px] text-emerald-600 font-semibold mb-3">{CLIENT_EVAL.trendLabel}</p>
+                <p className="text-[10px] text-stone-400 font-semibold mb-2">よく選ばれたキーワード</p>
+                <div className="flex flex-col gap-1">
+                  {CLIENT_EVAL.keywords.map((kw) => (
+                    <div key={kw.label} className="flex items-center justify-between gap-1">
+                      <span className="text-[10px] text-stone-600 leading-snug">{kw.label}</span>
+                      <span className="text-[10px] font-bold text-orange-400 shrink-0">{kw.count}</span>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-[10px] text-stone-300 mt-2.5">今月 {CLIENT_EVAL.totalRatings}件</p>
+              </div>
             </div>
 
             {/* 要注意アラート */}
@@ -1223,6 +1271,32 @@ export default function ManagerPage() {
                 ))}
               </div>
             )}
+
+            {/* 最近の顧客の声 */}
+            <section className="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+              <div className="px-5 py-4 border-b border-stone-100 flex items-center justify-between">
+                <h2 className="text-sm font-bold text-stone-800">最近の顧客の声</h2>
+                <a href="/demo/customer" className="text-xs text-[#e8836e] font-medium">評価フォームを開く →</a>
+              </div>
+              <div className="divide-y divide-stone-50">
+                {CLIENT_EVAL.voices.map((v, i) => (
+                  <div key={i} className="px-5 py-3.5">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <div className="flex gap-0.5">
+                        {[1,2,3,4,5].map((s) => (
+                          <svg key={s} className={`w-3 h-3 ${s <= v.rating ? "text-amber-400" : "text-stone-200"}`} fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                          </svg>
+                        ))}
+                      </div>
+                      <span className="text-[10px] text-stone-400 ml-auto">{v.timeAgo}</span>
+                    </div>
+                    <p className="text-xs text-stone-600 leading-relaxed">&ldquo;{v.text}&rdquo;</p>
+                    <p className="text-[10px] text-stone-400 mt-1">{v.name}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
 
             {/* AI提案 */}
             <AiAnalysisSection />

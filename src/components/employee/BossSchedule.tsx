@@ -15,28 +15,28 @@ const DUMMY_SCHEDULES: Schedule[] = [
     id: "1",
     date: "6/3",
     time: "09:00",
-    title: "A現場 立会い検査",
-    location: "中央区3丁目",
+    title: "プロジェクトA 確認MTG",
+    location: "第1会議室",
   },
   {
     id: "2",
     date: "6/3",
     time: "14:00",
-    title: "B現場 打ち合わせ",
-    location: "西区12丁目",
+    title: "プロジェクトB 定例会議",
+    location: "オンライン",
   },
   {
     id: "3",
     date: "6/4",
     time: "10:00",
-    title: "資材発注",
+    title: "備品発注",
   },
   {
     id: "4",
     date: "6/4",
     time: "15:00",
-    title: "C現場 進捗確認",
-    location: "東区5丁目",
+    title: "プロジェクトC 進捗確認",
+    location: "第2会議室",
   },
   {
     id: "5",
@@ -54,7 +54,7 @@ export function BossSchedule() {
   return (
     <section className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-sm font-semibold text-gray-700">📅 リーダーの予定</h2>
+        <h2 className="text-sm font-semibold text-gray-700">📅 マネージャーの予定</h2>
         <button
           onClick={() => setExpanded(!expanded)}
           className="text-xs text-blue-500 hover:text-blue-600 font-medium"

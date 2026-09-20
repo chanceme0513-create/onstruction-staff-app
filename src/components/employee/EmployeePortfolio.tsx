@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 
 type Voice = {
   id: string;
@@ -16,20 +17,40 @@ type Props = {
 };
 
 const TEAM_SCORE = 4.8;
+const CLIENT_SCORE = 4.6;
 
 const TEAM_KEYWORDS = [
-  { label: "安全意識が高い", count: 32 },
+  { label: "丁寧な対応", count: 32 },
   { label: "頼りになる", count: 24 },
+];
+
+const CLIENT_KEYWORDS = [
+  { label: "説明が分かりやすい", count: 18 },
+  { label: "対応が速い", count: 15 },
 ];
 
 const VOICES: Voice[] = [
   {
+    id: "1",
+    type: "client",
+    text: "丁寧に説明していただき、とても安心できました。また担当してほしいです。",
+    tags: ["説明が分かりやすい"],
+    timeAgo: "2日前",
+  },
+  {
     id: "2",
     type: "team",
-    text: "足場の設置、フォローのタイミングが完璧で本当に助かりました！",
-    tags: ["安全意識が高い"],
+    text: "急なお客様対応のフォロー、本当に助かりました！いつも頼りにしています。",
+    tags: ["丁寧な対応"],
     timeAgo: "4時間前",
     from: "山田 次郎",
+  },
+  {
+    id: "3",
+    type: "client",
+    text: "問い合わせへの返信が早く、スムーズに進みました。ありがとうございました。",
+    tags: ["対応が速い"],
+    timeAgo: "3日前",
   },
   {
     id: "4",
@@ -41,8 +62,10 @@ const VOICES: Voice[] = [
   },
 ];
 
-export function EmployeePortfolio({ userName = "田中 太郎", userRole = "施工スタッフ" }: Props) {
+export function EmployeePortfolio({ userName = "田中 太郎", userRole = "スタッフ" }: Props) {
+  const [voiceTab, setVoiceTab] = useState<"team" | "client">("team");
   const initials = userName.replace(/\s/g, "").slice(0, 2);
+  const filteredVoices = VOICES.filter((v) => v.type === voiceTab);
 
   return (
     <section className="bg-white rounded-lg border border-slate-200 overflow-hidden">
@@ -68,28 +91,53 @@ export function EmployeePortfolio({ userName = "田中 太郎", userRole = "施�
       </div>
 
       {/* スコアパネル */}
-      <div className="bg-slate-100 border-t border-b border-slate-100">
-        {/* チーム */}
-        <div className="bg-white px-4 py-3">
-          <div className="flex items-center gap-1.5 mb-2">
-            <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center">
-              <svg className="w-3 h-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-            </div>
-            <span className="text-xs font-semibold text-blue-600">チーム</span>
-          </div>
-          <div className="flex items-baseline gap-1 mb-2">
-            <span className="text-2xl font-bold text-slate-900">{TEAM_SCORE}</span>
-            <span className="text-xs text-slate-400">/ 5.0</span>
-          </div>
-          <div className="flex flex-col gap-1">
-            {TEAM_KEYWORDS.map((kw) => (
-              <div key={kw.label} className="flex items-center justify-between">
-                <span className="text-[11px] text-slate-500">{kw.label}</span>
-                <span className="text-[11px] font-bold text-blue-500">{kw.count}</span>
+      <div className="border-t border-b border-slate-100">
+        <div className="grid grid-cols-2 divide-x divide-slate-100">
+          {/* チーム */}
+          <div className="bg-white px-4 py-3">
+            <div className="flex items-center gap-1.5 mb-2">
+              <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center">
+                <svg className="w-3 h-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
               </div>
-            ))}
+              <span className="text-xs font-semibold text-blue-600">チーム</span>
+            </div>
+            <div className="flex items-baseline gap-1 mb-2">
+              <span className="text-2xl font-bold text-slate-900">{TEAM_SCORE}</span>
+              <span className="text-xs text-slate-400">/ 5.0</span>
+            </div>
+            <div className="flex flex-col gap-1">
+              {TEAM_KEYWORDS.map((kw) => (
+                <div key={kw.label} className="flex items-center justify-between">
+                  <span className="text-[11px] text-slate-500">{kw.label}</span>
+                  <span className="text-[11px] font-bold text-blue-500">{kw.count}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* 顧客 */}
+          <div className="bg-white px-4 py-3">
+            <div className="flex items-center gap-1.5 mb-2">
+              <div className="w-5 h-5 rounded-full bg-orange-100 flex items-center justify-center">
+                <svg className="w-3 h-3 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+              <span className="text-xs font-semibold text-orange-500">顧客</span>
+            </div>
+            <div className="flex items-baseline gap-1 mb-2">
+              <span className="text-2xl font-bold text-slate-900">{CLIENT_SCORE}</span>
+              <span className="text-xs text-slate-400">/ 5.0</span>
+            </div>
+            <div className="flex flex-col gap-1">
+              {CLIENT_KEYWORDS.map((kw) => (
+                <div key={kw.label} className="flex items-center justify-between">
+                  <span className="text-[11px] text-slate-500">{kw.label}</span>
+                  <span className="text-[11px] font-bold text-orange-400">{kw.count}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -98,16 +146,29 @@ export function EmployeePortfolio({ userName = "田中 太郎", userRole = "施�
       <div className="px-4 pt-3 pb-1">
         <div className="flex items-center justify-between mb-2">
           <span className="text-sm font-semibold text-slate-800">Recent Voices</span>
-          <span className="text-[11px] px-2.5 py-1 rounded-full font-medium bg-blue-500 text-white">チーム</span>
+          <div className="flex gap-1">
+            <button
+              onClick={() => setVoiceTab("team")}
+              className={`text-[11px] px-2.5 py-1 rounded-full font-medium transition-colors ${voiceTab === "team" ? "bg-blue-500 text-white" : "bg-slate-100 text-slate-500"}`}
+            >
+              チーム
+            </button>
+            <button
+              onClick={() => setVoiceTab("client")}
+              className={`text-[11px] px-2.5 py-1 rounded-full font-medium transition-colors ${voiceTab === "client" ? "bg-orange-400 text-white" : "bg-slate-100 text-slate-500"}`}
+            >
+              顧客
+            </button>
+          </div>
         </div>
       </div>
 
       <div className="px-4 pb-4 flex flex-col gap-2.5">
-        {VOICES.map((voice) => (
+        {filteredVoices.map((voice) => (
           <div key={voice.id} className="border border-slate-100 rounded-lg p-3">
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-600">
-                チーム
+              <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${voice.type === "team" ? "bg-blue-100 text-blue-600" : "bg-orange-100 text-orange-600"}`}>
+                {voice.type === "team" ? "チーム" : "顧客"}
               </span>
               <span className="text-[11px] text-slate-400">{voice.timeAgo}</span>
               {voice.from && (

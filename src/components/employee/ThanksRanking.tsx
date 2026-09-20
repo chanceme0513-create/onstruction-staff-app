@@ -9,11 +9,11 @@ type RankingItem = {
 };
 
 const DUMMY_RANKING: RankingItem[] = [
-  { rank: 1, name: "山田リーダー", avatar: "👨‍🔧", thanksCount: 24 },
-  { rank: 2, name: "田中 太郎", avatar: "👷", thanksCount: 18, isMe: true },
-  { rank: 3, name: "佐藤", avatar: "🧑‍🔧", thanksCount: 15 },
+  { rank: 1, name: "山田リーダー", avatar: "👨‍💼", thanksCount: 24 },
+  { rank: 2, name: "田中 太郎", avatar: "🧑‍💼", thanksCount: 18, isMe: true },
+  { rank: 3, name: "佐藤", avatar: "👩‍💼", thanksCount: 15 },
   { rank: 4, name: "鈴木", avatar: "👨‍💼", thanksCount: 12 },
-  { rank: 5, name: "高橋", avatar: "🧑‍🏭", thanksCount: 9 },
+  { rank: 5, name: "高橋", avatar: "🧑‍💼", thanksCount: 9 },
 ];
 
 export function ThanksRanking() {
