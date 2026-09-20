@@ -209,7 +209,7 @@ function ReportDetailModal({ report, onClose }: { report: DailyReport; onClose: 
 
         {report.note && (
           <div>
-            <p className="text-xs font-semibold text-stone-400 mb-2">相談・申し送り</p>
+            <p className="text-xs font-semibold text-stone-400 mb-2">相談事項</p>
             <div className="bg-yellow-50 border border-yellow-200 rounded-xl px-4 py-3">
               <p className="text-sm text-stone-700 leading-relaxed">{report.note}</p>
             </div>
@@ -226,13 +226,13 @@ const AI_RECOMMENDATIONS: AiRecommendation[] = [
   {
     priority: "high",
     title: "佐藤 健 への即時フォローが必要",
-    reason: "体調スコア2・意欲スコア2と、両方が低水準です。本人から「疲れが溜まっている・締め切り業務が続いている」との申し送りもあり、翌日の業務アサインには慎重な判断が求められます。",
+    reason: "体調スコア2・意欲スコア2と、両方が低水準です。本人から「疲れが溜まっている・締め切り業務が続いている」との相談事項もあり、翌日の業務アサインには慎重な判断が求められます。",
     action: "本日中に声がけを行い、状態を確認してください。明日は負荷の高い業務を避け、サポート役や軽めのタスクへの振り替えを検討することを推奨します。",
   },
   {
     priority: "medium",
     title: "取引先資料遅延によるプロジェクトAスケジュールリスク",
-    reason: "田中 太郎の申し送りに「取引先資料の到着が遅れており明日の業務に影響が出る可能性」が報告されています。プロジェクト全体の進捗に波及するリスクがあります。",
+    reason: "田中 太郎の相談事項に「取引先資料の到着が遅れており明日の業務に影響が出る可能性」が報告されています。プロジェクト全体の進捗に波及するリスクがあります。",
     action: "取引先へ状況確認の連絡を入れてください。最悪の場合に備え、優先タスクの見直しや作業順の変更指示を準備しておくことを推奨します。",
   },
   {
@@ -1262,7 +1262,7 @@ export default function ManagerPage() {
                     <span className="text-xl shrink-0">🚨</span>
                     <div className="flex-1">
                       <p className="text-sm font-semibold text-red-700">要注意：{r.name}</p>
-                      <p className="text-xs text-red-600 mt-0.5">コンディションスコア {r.avgScore.toFixed(1)} / 5.0{r.note && "　申し送りあり"}</p>
+                      <p className="text-xs text-red-600 mt-0.5">コンディションスコア {r.avgScore.toFixed(1)} / 5.0{r.note && "　相談事項あり"}</p>
                     </div>
                     <button onClick={() => setSelectedReport(r)} className="text-xs bg-white px-3 py-1.5 rounded-lg border border-red-200 text-red-600 font-medium hover:bg-red-50 transition-colors shrink-0">
                       詳細
@@ -1301,11 +1301,11 @@ export default function ManagerPage() {
             {/* AI提案 */}
             <AiAnalysisSection />
 
-            {/* 申し送り通知 */}
+            {/* 相談事項通知 */}
             {hasNotes > 0 && (
               <div className="bg-yellow-50 border border-yellow-200 rounded-2xl px-4 py-3 flex items-center gap-3">
                 <span className="text-lg">📝</span>
-                <p className="text-sm text-yellow-800 font-medium">本日 {hasNotes}件の申し送りがあります</p>
+                <p className="text-sm text-yellow-800 font-medium">本日 {hasNotes}件の相談事項があります</p>
                 <button onClick={() => setActiveTab("reports")} className="ml-auto text-xs text-yellow-700 font-semibold underline">確認</button>
               </div>
             )}
@@ -1377,7 +1377,7 @@ export default function ManagerPage() {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {report.note && (
-                    <span className="flex items-center gap-1 text-xs bg-yellow-50 border border-yellow-200 text-yellow-700 px-2.5 py-1 rounded-full font-medium">📝 申し送りあり</span>
+                    <span className="flex items-center gap-1 text-xs bg-yellow-50 border border-yellow-200 text-yellow-700 px-2.5 py-1 rounded-full font-medium">📝 相談事項あり</span>
                   )}
                   {report.thanksSentTo && (
                     <span className="flex items-center gap-1 text-xs bg-amber-50 border border-amber-200 text-amber-700 px-2.5 py-1 rounded-full font-medium">🤝 {report.thanksSentTo}へ感謝</span>

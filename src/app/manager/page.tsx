@@ -193,7 +193,7 @@ function ReportDetailModal({ report, onClose }: { report: DailyReport; onClose: 
 
         {report.note && (
           <div>
-            <p className="text-xs font-semibold text-stone-400 mb-2">相談・申し送り</p>
+            <p className="text-xs font-semibold text-stone-400 mb-2">相談事項</p>
             <div className="bg-yellow-50 border border-yellow-200 rounded-xl px-4 py-3">
               <p className="text-sm text-stone-700 leading-relaxed">{report.note}</p>
             </div>
@@ -215,9 +215,9 @@ const AI_RECOMMENDATIONS: AiRecommendation[] = [
   },
   {
     priority: "medium",
-    title: "申し送りのある現場の進捗確認",
-    reason: "本日申し送りのある報告があります。資材遅延や現場トラブルが翌日の工程に影響するリスクがあります。",
-    action: "申し送り内容を確認し、必要に応じて業者や担当者へ今日中に連絡を取ってください。",
+    title: "相談事項のある現場の進捗確認",
+    reason: "本日相談事項のある報告があります。資材遅延や現場トラブルが翌日の工程に影響するリスクがあります。",
+    action: "相談事項の内容を確認し、必要に応じて業者や担当者へ今日中に連絡を取ってください。",
   },
   {
     priority: "low",
@@ -588,7 +588,7 @@ async function downloadDailyReportsCSV(year: number, month: number) {
     "日付", "スタッフ名", "現場名・業務内容",
     "出勤時刻", "退勤時刻", "勤務時間(h)",
     "体調", "進捗", "連携", "安全", "意欲", "平均スコア",
-    "感謝送り先", "感謝タグ", "申し送り",
+    "感謝送り先", "感謝タグ", "相談事項",
   ];
 
   const escape = (v: string | number | null) => {
@@ -781,7 +781,7 @@ function AnalyticsTab({
         <section className="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
           <div className="px-5 py-4 border-b border-stone-100">
             <h2 className="text-sm font-bold text-stone-800">日報データをエクスポート</h2>
-            <p className="text-xs text-stone-400 mt-0.5">コンディションスコア・申し送りを含む全データをCSVで出力します</p>
+            <p className="text-xs text-stone-400 mt-0.5">コンディションスコア・相談事項を含む全データをCSVで出力します</p>
           </div>
           <div className="p-5 flex flex-col gap-4">
             <div className="flex items-center gap-3">
@@ -1034,7 +1034,7 @@ export default function ManagerPage() {
                     <span className="text-xl shrink-0">🚨</span>
                     <div className="flex-1">
                       <p className="text-sm font-semibold text-red-700">要注意：{r.name}</p>
-                      <p className="text-xs text-red-600 mt-0.5">コンディションスコア {r.avgScore.toFixed(1)} / 5.0{r.note && "　申し送りあり"}</p>
+                      <p className="text-xs text-red-600 mt-0.5">コンディションスコア {r.avgScore.toFixed(1)} / 5.0{r.note && "　相談事項あり"}</p>
                     </div>
                     <button onClick={() => setSelectedReport(r)} className="text-xs bg-white px-3 py-1.5 rounded-lg border border-red-200 text-red-600 font-medium hover:bg-red-50 transition-colors shrink-0">
                       詳細
@@ -1054,7 +1054,7 @@ export default function ManagerPage() {
             {hasNotes > 0 && (
               <div className="bg-yellow-50 border border-yellow-200 rounded-2xl px-4 py-3 flex items-center gap-3">
                 <span className="text-lg">📝</span>
-                <p className="text-sm text-yellow-800 font-medium">本日 {hasNotes}件の申し送りがあります</p>
+                <p className="text-sm text-yellow-800 font-medium">本日 {hasNotes}件の相談事項があります</p>
                 <button onClick={() => setActiveTab("reports")} className="ml-auto text-xs text-yellow-700 font-semibold underline">確認</button>
               </div>
             )}
@@ -1125,7 +1125,7 @@ export default function ManagerPage() {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {report.note && (
-                    <span className="flex items-center gap-1 text-xs bg-yellow-50 border border-yellow-200 text-yellow-700 px-2.5 py-1 rounded-full font-medium">📝 申し送りあり</span>
+                    <span className="flex items-center gap-1 text-xs bg-yellow-50 border border-yellow-200 text-yellow-700 px-2.5 py-1 rounded-full font-medium">📝 相談事項あり</span>
                   )}
                   {report.thanksSentTo && (
                     <span className="flex items-center gap-1 text-xs bg-amber-50 border border-amber-200 text-amber-700 px-2.5 py-1 rounded-full font-medium">🤝 {report.thanksSentTo}へ感謝</span>

@@ -331,7 +331,7 @@ export function DailyReport({ currentUser }: Props) {
           <div>
             <p className="text-xs font-semibold text-gray-400 tracking-wider uppercase mb-3">相談・連絡事項（任意）</p>
             <textarea value={note} onChange={(e) => setNote(e.target.value)}
-              placeholder="明日への申し送りや作業上の相談があれば入力してください"
+              placeholder="相談事項や翌日への引き継ぎ事項があれば入力してください"
               className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-700 placeholder:text-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-blue-300"
               rows={3} />
           </div>
