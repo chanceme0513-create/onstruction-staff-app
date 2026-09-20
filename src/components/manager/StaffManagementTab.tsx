@@ -57,6 +57,7 @@ export function StaffManagementTab() {
     if (!/^\d{4}$/.test(addPin)) { setAddError("PINは4桁の数字で入力してください"); return; }
     setSubmitting(true);
     const { error } = await supabase.from("staff_members").insert({
+      id: crypto.randomUUID(),
       name: addName.trim(),
       role: addRole.trim(),
       pin: addPin,
