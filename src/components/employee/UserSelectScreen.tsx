@@ -8,12 +8,12 @@ export type StaffUser = {
 };
 
 export const STAFF_LIST: StaffUser[] = [
-  { id: "staff-1", name: "田中 太郎", role: "スタッフ", avatar: "🧑‍💼" },
-  { id: "staff-2", name: "山田 次郎", role: "スタッフ", avatar: "👨‍💼" },
-  { id: "staff-3", name: "佐藤 健", role: "スタッフ", avatar: "🧑‍💼" },
-  { id: "staff-4", name: "鈴木 誠", role: "スタッフ", avatar: "👨‍💼" },
-  { id: "staff-5", name: "高橋 浩", role: "スタッフ", avatar: "🧑‍💼" },
-  { id: "staff-test", name: "テスト用", role: "確認用アカウント", avatar: "🔍" },
+  { id: "demo-1", name: "田中 太郎（デモ）", role: "スタッフ", avatar: "🧑‍💼" },
+  { id: "demo-2", name: "山田 次郎（デモ）", role: "スタッフ", avatar: "👨‍💼" },
+  { id: "demo-3", name: "佐藤 健（デモ）", role: "スタッフ", avatar: "🧑‍💼" },
+  { id: "demo-4", name: "鈴木 誠（デモ）", role: "スタッフ", avatar: "👨‍💼" },
+  { id: "demo-5", name: "高橋 浩（デモ）", role: "スタッフ", avatar: "🧑‍💼" },
+  { id: "demo-manager", name: "管理者（デモ）", role: "確認用アカウント", avatar: "🔍" },
 ];
 
 type Props = {

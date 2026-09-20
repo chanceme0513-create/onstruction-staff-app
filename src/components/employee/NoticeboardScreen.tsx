@@ -9,7 +9,7 @@ type Notice = {
   title: string;
   content: string;
   posted_by: string;
-  posted_at: string;
+  created_at: string;
   is_pinned: boolean;
 };
 
@@ -38,7 +38,7 @@ const DUMMY_NOTICES: Notice[] = [
     title: "安全作業マニュアル更新のお知らせ",
     content: "熱中症対策マニュアルを更新しました。今週中に各自確認し、現場でのルールを徹底してください。不明点はリーダーまで。",
     posted_by: "管理者",
-    posted_at: new Date(Date.now() - 2 * 3600000).toISOString(),
+    created_at: new Date(Date.now() - 2 * 3600000).toISOString(),
     is_pinned: true,
   },
   {
@@ -46,7 +46,7 @@ const DUMMY_NOTICES: Notice[] = [
     title: "A現場の工程変更について",
     content: "来週月曜日のA現場（中央区3丁目）の工程が変更となりました。鉄筋組み立て→型枠設置の順に変更。詳細はリーダーから直接連絡があります。",
     posted_by: "田中 太郎",
-    posted_at: new Date(Date.now() - 5 * 3600000).toISOString(),
+    created_at: new Date(Date.now() - 5 * 3600000).toISOString(),
     is_pinned: false,
   },
   {
@@ -54,7 +54,7 @@ const DUMMY_NOTICES: Notice[] = [
     title: "先週の安全会議ありがとうございました",
     content: "先週の安全会議、皆さん参加ありがとうございました！ヒヤリハット事例の共有が非常に参考になりました。来月も開催予定です。",
     posted_by: "鈴木 誠",
-    posted_at: new Date(Date.now() - 26 * 3600000).toISOString(),
+    created_at: new Date(Date.now() - 26 * 3600000).toISOString(),
     is_pinned: false,
   },
   {
@@ -62,7 +62,7 @@ const DUMMY_NOTICES: Notice[] = [
     title: "工具・備品の補充について",
     content: "電動ドリル・安全帯・ヘルメットを補充しました。使用後は必ず所定の場所に返却してください。破損や不足があれば山田まで連絡を。",
     posted_by: "山田 次郎",
-    posted_at: new Date(Date.now() - 2 * 86400000).toISOString(),
+    created_at: new Date(Date.now() - 2 * 86400000).toISOString(),
     is_pinned: false,
   },
 ];
@@ -77,7 +77,7 @@ export function NoticeboardScreen({ postedBy }: Props) {
       .from("notices")
       .select("*")
       .order("is_pinned", { ascending: false })
-      .order("posted_at", { ascending: false });
+      .order("created_at", { ascending: false });
 
     if (!error && data && data.length > 0) {
       setNotices(data);
@@ -133,7 +133,7 @@ export function NoticeboardScreen({ postedBy }: Props) {
               <p className="text-sm text-stone-600 leading-relaxed mb-3">{notice.content}</p>
               <div className="flex items-center justify-between text-xs text-stone-400">
                 <span className="font-medium">{notice.posted_by}</span>
-                <span>{formatDate(notice.posted_at)}</span>
+                <span>{formatDate(notice.created_at)}</span>
               </div>
             </div>
           ))}
