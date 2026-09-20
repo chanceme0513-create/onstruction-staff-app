@@ -25,7 +25,6 @@ export default function LoginPage() {
   const [pin, setPin] = useState("");
   const [shake, setShake] = useState(false);
   const [validating, setValidating] = useState(false);
-  const [fetchError, setFetchError] = useState<string | null>(null);
 
   useEffect(() => {
     const user = getAuthUser();
@@ -38,7 +37,6 @@ export default function LoginPage() {
       .select("id, name, role, is_manager")
       .order("name")
       .then(({ data, error }) => {
-        if (error) { console.error("Supabase error:", error); setFetchError(error.message); }
         if (data && data.length > 0) setStaffList(data);
         setLoading(false);
       });
@@ -117,10 +115,7 @@ export default function LoginPage() {
       {phase === "select" && (
         <div className="w-full max-w-sm flex flex-col gap-2">
           {staffList.length === 0 ? (
-            <div className="text-center py-8">
-              <p className="text-sm text-stone-400">スタッフ情報を読み込めませんでした</p>
-              {fetchError && <p className="text-xs text-red-400 mt-2 break-all">{fetchError}</p>}
-            </div>
+            <p className="text-sm text-stone-400 text-center py-8">スタッフ情報を読み込めませんでした</p>
           ) : (
             staffList.map((staff) => (
               <button
