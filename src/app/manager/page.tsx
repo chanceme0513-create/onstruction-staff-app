@@ -5,10 +5,11 @@ import { useRouter } from "next/navigation";
 import { NoticeboardScreen } from "@/components/employee/NoticeboardScreen";
 import { AttendanceView } from "@/components/manager/AttendanceView";
 import { ManagerCalendarView } from "@/components/manager/ManagerCalendarView";
+import { StaffManagementTab } from "@/components/manager/StaffManagementTab";
 import { supabase, DailyReportRow } from "@/lib/supabase";
 import { getAuthUser, clearAuthUser } from "@/lib/auth";
 
-type ManagerTab = "dashboard" | "reports" | "analytics" | "noticeboard" | "attendance";
+type ManagerTab = "dashboard" | "reports" | "analytics" | "noticeboard" | "attendance" | "settings";
 
 type ConditionAnswers = {
   health: number;
@@ -725,11 +726,12 @@ function AnalyticsTab({
 }
 
 const TABS: { id: ManagerTab; label: string }[] = [
-  { id: "dashboard", label: "ダッシュボード" },
-  { id: "reports", label: "業務連絡" },
+  { id: "dashboard", label: "ホーム" },
+  { id: "reports", label: "日報" },
   { id: "analytics", label: "分析" },
   { id: "attendance", label: "勤怠" },
   { id: "noticeboard", label: "掲示板" },
+  { id: "settings", label: "設定" },
 ];
 
 export default function ManagerPage() {
@@ -876,20 +878,22 @@ export default function ManagerPage() {
       </header>
 
       <div className="bg-white border-b border-stone-100 sticky top-[52px] z-10">
-        <div className="max-w-3xl mx-auto px-4 flex">
-          {TABS.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`flex-1 py-3 text-sm font-semibold border-b-2 transition-colors ${
-                activeTab === tab.id
-                  ? "border-[#e8836e] text-[#e8836e]"
-                  : "border-transparent text-stone-400 hover:text-stone-600"
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+        <div className="max-w-3xl mx-auto overflow-x-auto scrollbar-hide">
+          <div className="flex px-4 min-w-max">
+            {TABS.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`px-4 py-3 text-sm font-semibold border-b-2 whitespace-nowrap transition-colors ${
+                  activeTab === tab.id
+                    ? "border-[#e8836e] text-[#e8836e]"
+                    : "border-transparent text-stone-400 hover:text-stone-600"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -1047,6 +1051,10 @@ export default function ManagerPage() {
 
         {!loading && activeTab === "noticeboard" && (
           <NoticeboardScreen postedBy={managerName} />
+        )}
+
+        {!loading && activeTab === "settings" && (
+          <StaffManagementTab />
         )}
       </main>
 
